@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>소아치과 원내생</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
+<style>
+/* Layout: 상단 고정 바(이름·역할·탭) + 본문 한 단. 진료 나절 격자는 월~토 × 오전/오후, 좁은 화면에서는 가로 스크롤 */
+:root{
+  color-scheme:light;
+  /* 중간 밝기: 순백·검정 대신 부드러운 민트 회색 바탕 + 미색 패널 */
+  --bg:#e6eeeb; --panel:#f8faf7; --ink:#22313a; --muted:#566872; --line:#cddbd6;
+  --accent:#2a8a80; --accent-ink:#ffffff; --accent-soft:#d4eae5;
+  --coral:#e2785a; --sun:#f0bf4c; --sky:#6aaed6;
+  --warm:#c26a1e; --warm-soft:#f9e8d4; --bad:#c23d4a; --bad-soft:#f6dcdc; --ok:#2b8a55; --ok-soft:#d9efe0;
+  --chip:#edf3f0; --mine:#fbefc4; --mine-line:#dcae2c; --shadow:0 2px 6px rgba(34,49,58,.07);
+  --hdr:#d6e8e2;
+  --tooth:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2.2c-1.9 0-2.9.9-4.4.9S5.2 2.1 4 3.2C2.7 4.4 2.3 6.4 3.1 8.9c.6 1.8 1 3.1 1.2 5 .3 3.2 1.1 7.9 2.8 7.9 1.5 0 1.7-3.3 2.3-5.2.4-1.3 1.2-1.6 2.6-1.6s2.2.3 2.6 1.6c.6 1.9.8 5.2 2.3 5.2 1.7 0 2.5-4.7 2.8-7.9.2-1.9.6-3.2 1.2-5 .8-2.5.4-4.5-.9-5.7-1.2-1.1-2.4-.1-3.6-.1S13.9 2.2 12 2.2z'/></svg>");
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+/* 단일 테마(중간 밝기). 어두운 모드에서도 같은 색을 씀 */
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--hdr)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--hdr) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='64' viewBox='0 0 220 64'><g fill='none' stroke-linejoin='round' stroke-width='1.3' opacity='.55'><path transform='translate(14 14) scale(.9)' stroke='%232a8a80' d='M12 2.2c-1.9 0-2.9.9-4.4.9S5.2 2.1 4 3.2C2.7 4.4 2.3 6.4 3.1 8.9c.6 1.8 1 3.1 1.2 5 .3 3.2 1.1 7.9 2.8 7.9 1.5 0 1.7-3.3 2.3-5.2.4-1.3 1.2-1.6 2.6-1.6s2.2.3 2.6 1.6c.6 1.9.8 5.2 2.3 5.2 1.7 0 2.5-4.7 2.8-7.9.2-1.9.6-3.2 1.2-5 .8-2.5.4-4.5-.9-5.7-1.2-1.1-2.4-.1-3.6-.1S13.9 2.2 12 2.2z'/><path transform='translate(120 30) scale(.7) rotate(-12 12 12)' stroke='%23e2785a' d='M12 2.2c-1.9 0-2.9.9-4.4.9S5.2 2.1 4 3.2C2.7 4.4 2.3 6.4 3.1 8.9c.6 1.8 1 3.1 1.2 5 .3 3.2 1.1 7.9 2.8 7.9 1.5 0 1.7-3.3 2.3-5.2.4-1.3 1.2-1.6 2.6-1.6s2.2.3 2.6 1.6c.6 1.9.8 5.2 2.3 5.2 1.7 0 2.5-4.7 2.8-7.9.2-1.9.6-3.2 1.2-5 .8-2.5.4-4.5-.9-5.7-1.2-1.1-2.4-.1-3.6-.1S13.9 2.2 12 2.2z'/></g><g opacity='.6'><path fill='%23f0bf4c' d='M78 14l2 4.6 4.6 2-4.6 2-2 4.6-2-4.6-4.6-2 4.6-2z'/><path fill='%236aaed6' d='M186 40l1.5 3.4 3.4 1.5-3.4 1.5-1.5 3.4-1.5-3.4-3.4-1.5 3.4-1.5z'/><circle cx='160' cy='12' r='2.4' fill='%23e2785a'/><circle cx='52' cy='48' r='2' fill='%236aaed6'/><circle cx='206' cy='18' r='1.8' fill='%232a8a80'/></g></svg>") repeat-x 0 0;border-bottom:3px solid transparent;border-image:linear-gradient(90deg,var(--accent) 0 25%,var(--sun) 25% 50%,var(--coral) 50% 75%,var(--sky) 75% 100%) 1}
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.brand{font-weight:700;font-size:18px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.brand .logo{width:34px;height:34px;border-radius:50%;background:var(--panel);display:grid;place-items:center;box-shadow:0 0 0 3px var(--sun)}
+.brand .logo svg{width:22px;height:22px}
+.brand .bt{display:flex;flex-direction:column;line-height:1.2;background:var(--hdr);padding:2px 8px;border-radius:8px}
+.brand small{font-weight:500;color:var(--muted);font-size:12px}
+.who{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;background:var(--chip);color:var(--ink);font-size:12px;white-space:nowrap}
+.pill.acc{background:var(--accent-soft);color:var(--accent)}
+.pill.warm{background:var(--warm-soft);color:var(--warm)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px}
+nav.tabs button{border:1px solid transparent;background:rgba(255,255,255,.45);padding:6px 14px;font:inherit;color:var(--ink);border-radius:999px;cursor:pointer;white-space:nowrap}
+nav.tabs button:hover{background:var(--panel)}
+nav.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+main{padding-block:18px 60px;display:flex;flex-direction:column;gap:18px}
+h2{font-size:16px;margin:0;font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.section > h2::before,.section > .row:first-child > h2::before{content:"";width:16px;height:16px;flex:none;background:var(--accent);-webkit-mask:var(--tooth) center/contain no-repeat;mask:var(--tooth) center/contain no-repeat}
+.section:nth-of-type(3n+2) > h2::before,.section:nth-of-type(3n+2) > .row:first-child > h2::before{background:var(--coral)}
+.section:nth-of-type(3n) > h2::before,.section:nth-of-type(3n) > .row:first-child > h2::before{background:var(--sun)}
+h3{font-size:14px;margin:0;font-weight:600}
+.section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;min-width:0}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+button.btn,label.btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:6px 12px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+button.btn:hover,label.btn:hover{border-color:var(--accent)}
+button.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.btn.danger{color:var(--bad);border-color:var(--bad-soft)}
+button.btn.sm{padding:3px 8px;font-size:12px}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,label.btn:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+input,select,textarea{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 8px;min-width:0}
+textarea{width:100%;min-height:60px}
+.note{background:var(--warm-soft);color:var(--ink);border-radius:8px;padding:10px 12px;font-size:13px}
+.note.info{background:var(--accent-soft)}
+.note.bad{background:var(--bad-soft)}
+.scroll{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+/* 진료 나절 격자 */
+.grid{display:grid;grid-template-columns:56px repeat(6,minmax(150px,1fr));min-width:980px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.gh{background:var(--chip);padding:8px;font-weight:600;font-size:13px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.gh .d{display:flex;gap:6px;align-items:baseline}
+.gh.today{background:var(--mine)}
+.gl{background:var(--chip);padding:8px;font-weight:600;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);display:flex;align-items:flex-start}
+.gc{padding:6px;border-left:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-height:88px}
+.gc.closed{background:repeating-linear-gradient(135deg,var(--chip) 0 6px,transparent 6px 12px);color:var(--muted);font-size:12px;align-items:center;justify-content:center}
+.slot{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;padding:3px 6px;font-size:12px;background:var(--panel);cursor:pointer;text-align:left;font:inherit;font-size:12px;color:var(--ink);width:100%}
+.slot:hover{border-color:var(--accent)}
+.slot .lab{color:var(--muted);font-size:11px}
+.slot.off{text-decoration:line-through;color:var(--muted);cursor:default}
+.slot.taken{border-style:dashed;background:var(--chip);color:var(--muted);cursor:default}
+.slot.int{background:var(--accent-soft);border-color:transparent}
+.slot.full{opacity:.55}
+.slot.mine{background:var(--mine);border-color:var(--mine-line)}
+.slot .cnt{margin-left:auto;font-family:var(--f-mono);font-size:11px}
+.evt{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--warm-soft);color:var(--warm);border:0;cursor:pointer;font-family:inherit}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;gap:5px;align-items:center}
+.sw{width:12px;height:12px;border-radius:3px;border:1px solid var(--line);display:inline-block}
+/* 점수표 */
+.sheets{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.sheet{border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0;background:var(--panel)}
+.sheet .sh{padding:10px 12px;background:var(--accent-soft);display:flex;align-items:baseline;gap:8px}
+.sheet .sh .tot{margin-left:auto;font-family:var(--f-mono);font-size:18px;font-weight:600}
+.sheet .sh .tot small{font-size:12px;color:var(--muted);font-weight:400}
+.item{display:grid;grid-template-columns:52px 1fr auto;gap:8px;padding:8px 12px;border-top:1px solid var(--line);align-items:start}
+.item .code{font-family:var(--f-mono);font-size:11px;color:var(--muted);padding-top:2px}
+.item .sc{font-family:var(--f-mono);font-weight:600;white-space:nowrap}
+.item .sc small{color:var(--muted);font-weight:400}
+.item .det{font-size:12px;color:var(--muted);margin-top:2px}
+.item .edit{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.bar-meter{height:4px;background:var(--chip);border-radius:2px;margin-top:5px;overflow:hidden}
+.bar-meter i{display:block;height:100%;background:var(--accent)}
+.flags{display:flex;gap:6px;flex-wrap:wrap}
+.cnts{display:flex;gap:4px;flex-wrap:wrap}
+.cnts span{font-family:var(--f-mono);font-size:11px;background:var(--chip);padding:1px 6px;border-radius:4px}
+.cnts span.ok{background:var(--ok-soft);color:var(--ok)}
+/* dialog */
+.scrim{position:fixed;inset:0;background:rgba(10,20,22,.45);z-index:20;display:flex;align-items:flex-start;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 40px) max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));overflow-y:auto}
+.dlg{background:var(--panel);color:var(--ink);border-radius:12px;width:min(560px,100%);padding:18px;display:flex;flex-direction:column;gap:12px;border:1px solid var(--line)}
+.dlg .f{display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center}
+.dlg .f > label{font-size:12px;color:var(--muted)}
+.counter{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:6px;padding:2px 4px}
+.counter button{border:0;background:var(--chip);width:22px;height:22px;border-radius:4px;cursor:pointer;color:var(--ink);font:inherit}
+.counter b{min-width:18px;text-align:center;font-family:var(--f-mono)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 18px);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;z-index:30;font-size:13px;max-width:calc(100% - 32px)}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumbs img{width:120px;height:160px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
+.empty{padding:22px 20px 20px;text-align:center;color:var(--muted);font-size:13px}
+.empty::before{content:"";display:block;width:30px;height:30px;margin:0 auto 8px;background:var(--line);-webkit-mask:var(--tooth) center/contain no-repeat;mask:var(--tooth) center/contain no-repeat}
+.gate{max-width:420px;margin:30px auto;text-align:center;align-items:center}
+.gate .mascot{width:96px;height:96px}
+.gate .f2{display:flex;flex-direction:column;gap:8px;width:100%;max-width:280px}
+.gate input{font-size:15px;padding:8px 10px;text-align:center}
+.role-owner{background:var(--sun);color:#3d2c00}
+.preview-bar{background:var(--sun);color:#3d2c00;border-radius:12px;padding:8px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.hero .mascot{width:72px;height:72px}
+.hero .nm{font-size:20px;font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--chip);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile.cur{background:var(--accent-soft);border-color:var(--accent)}
+.tile .v{font-family:var(--f-mono);font-size:22px;font-weight:600}
+.tile .v small{font-size:12px;color:var(--muted);font-weight:400}
+.need{display:grid;grid-template-columns:22px 1fr;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
+.need:first-child{border-top:0}
+.need .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;background:var(--coral)}
+.need .dot.done{background:var(--ok)}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.sugg button{font:inherit;font-size:12px;border:1px dashed var(--accent);background:var(--panel);color:var(--accent);border-radius:999px;padding:3px 10px;cursor:pointer}
+.sugg button:hover{background:var(--accent-soft)}
+@media (max-width:640px){.hero{grid-template-columns:1fr}}
+@media (max-width:640px){.dlg .f{grid-template-columns:1fr}.who{margin-left:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+body.busy{cursor:progress}
+body.busy .btn.pri{opacity:.7}
+.gate a{color:var(--accent)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <div class="brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.2c-1.9 0-2.9.9-4.4.9S5.2 2.1 4 3.2C2.7 4.4 2.3 6.4 3.1 8.9c.6 1.8 1 3.1 1.2 5 .3 3.2 1.1 7.9 2.8 7.9 1.5 0 1.7-3.3 2.3-5.2.4-1.3 1.2-1.6 2.6-1.6s2.2.3 2.6 1.6c.6 1.9.8 5.2 2.3 5.2 1.7 0 2.5-4.7 2.8-7.9.2-1.9.6-3.2 1.2-5 .8-2.5.4-4.5-.9-5.7-1.2-1.1-2.4-.1-3.6-.1S13.9 2.2 12 2.2z" fill="#fff" stroke="#2a8a80" stroke-width="1.4"/><circle cx="9.3" cy="9.6" r=".9" fill="#22313a"/><circle cx="14.7" cy="9.6" r=".9" fill="#22313a"/><path d="M9.8 12.2q2.2 1.8 4.4 0" fill="none" stroke="#22313a" stroke-width="1" stroke-linecap="round"/><circle cx="7.6" cy="11.6" r="1" fill="#e2785a" opacity=".55"/><circle cx="16.4" cy="11.6" r="1" fill="#e2785a" opacity=".55"/></svg></span><span class="bt">소아치과 원내생<small>연세대학교 치과대학병원 소아치과</small></span></div>
+      <div class="who" id="who"></div>
+    </div>
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+  </div>
+</header>
+<div class="wrap"><main id="main"><div class="section"><div class="empty">불러오는 중입니다…</div></div></main></div>
+<div id="dlgRoot"></div>
+<div id="toastRoot"></div>
+<script>
+(() => {
+"use strict";
+/* ───────── 기준 (오리엔테이션 학년도별) ───────── */
+const PROFS5 = ["이제호","최형준","송제선","강정민","이고은"];
+const PROC = [["OE","구강검진"],["RD","러버댐"],["F","불소도포"],["TBI","TBI(착색)"]];
+const PROC_ETC = ["ETC","기타(공간유지·행동조절·응급 등)"];
+const PRAC_ITEMS = [["rest","수복(아말감·레진·PRR)"],["sscr","SS crown·고정식 공간유지장치"],["pulp","치수치료"],["prev","실런트·prophylaxis"],["ftbx","불소·TBI·발치"]];
+const PRAC_PTS = {2026:{rest:8,sscr:10,pulp:10,prev:6,ftbx:4}, 2025:{rest:6,sscr:8,pulp:8,prev:4,ftbx:2}};
+const FV_PTS = {2026:{OE:1,XR:1,OHI:2,F:4}, 2025:{OE:1,XR:1,OHI:2,F:2}};
+const GRADE_BONUS = {E:2,A:1,N:0,F:null};
+const KIND = {prof:"교수 Attending", int:"전공의 통합 Attending", disab:"장애인 치과치료 Attending", case:"진정·전신마취 증례", mini:"미니인턴십"};
+const KIND_2025_INT = "소아치과 외래 Attending";
+const HALF = {am:"오전", pm:"오후"};
+const DOW = ["월","화","수","목","금","토"];
+const DEFAULT_CFG = {intCap:3, miniPerWeek:5, caseCap:2, cohorts:{
+  "2026":{label:"2026학년도 오리엔테이션", s32:"2026-07-01", s4:"2026-12-06", end:"2027-08-14"},
+  "2025":{label:"2025학년도 오리엔테이션", s32:"2025-07-01", s4:"2025-12-07", end:"2026-08-15"}}};
+
+
+/* ───────── 기록·점수 계산 ───────── */
+function phaseOf(student, date){
+  const c = S.cfg.cohorts[String(student.cohort)] || DEFAULT_CFG.cohorts[String(student.cohort)];
+  if(!c || !date) return "4";
+  if(date < c.s32) return "3-1";
+  if(date < c.s4) return "3-2";
+  return "4";
+}
+function sumProcs(list){ const o={OE:0,RD:0,F:0,TBI:0,ETC:0}; list.forEach(r => { const p=r.procs||{}; for(const k in o) o[k]+= +p[k]||0; }); return o; }
+function slideBand(v){ if(v==null || v==="") return null; v=+v; if(v<50) return 10; if(v<60) return 12; if(v<70) return 14; if(v<80) return 16; if(v<90) return 18; return 20; }
+
+function compute(student, recs, m){
+  m = m || {};
+  const co = +student.cohort; const is26 = co >= 2026;
+  const sh = r => r.sheet || phaseOf(student, r.date);
+  const att = (sheet, type) => recs.filter(r => r.kind==="att" && r.type===type && sh(r)===sheet);
+  const flags = [];
+  const cntTxt = (p, need) => PROC.map(([k,l]) => ({k, l, n:p[k], ok:p[k]>=need}));
+  /* 3-1 */
+  const s31 = {key:"3-1", title:"본3 1학기", max:40, rows:[]};
+  const pqe = m.pqe==="P" ? 10 : 0;
+  s31.rows.push({code:"I-A1", label:"환자진료 자격시험", score:pqe, max:10, detail:m.pqe ? (m.pqe==="P"?"Pass":"Non-pass") : "미입력", edit:"pqe"});
+  const semPts = g => g ? 5 + ({A:2,B:1,C:0}[g]||0) : 0;
+  const sem = semPts(m.sem1) + semPts(m.sem2);
+  s31.rows.push({code:"I-A2", label:"세미나 2회 (기본 10, 최대 14)", score:sem, max:10, detail:`1차 ${m.sem1||"-"} · 2차 ${m.sem2||"-"}`, edit:"sem"});
+  const pa31 = att("3-1","prof");
+  const d31 = PROFS5.filter(p => pa31.some(r => r.prof===p));
+  s31.rows.push({code:"I-A3", label:"교수 Attending 5나절 (교수별 1회)", score:d31.length*2, max:10, detail: PROFS5.map(p => (d31.includes(p)?"✓":"·")+p).join(" "), prog:d31.length/5});
+  let a4, a4d;
+  if(is26){ const r=m.rot||{}; a4 = r.done ? Math.max(0, 10 - 2*(+r.attitude||0) - 2*(+r.absent||0) - (+r.late||0)) : 0; a4d = r.done ? `태도·이탈 ${r.attitude||0} · 결석 ${r.absent||0} · 지각 ${r.late||0}` : "미입력"; }
+  else { a4 = m.rot1!=null && m.rot1!=="" ? Math.min(10, +m.rot1) : 0; a4d = m.rot1!=null && m.rot1!=="" ? "입력됨" : "미입력"; }
+  s31.rows.push({code:"I-A4", label: is26 ? "1차 로테이션 출결·태도" : "임상 로테이션 1:1 교육", score:a4, max:10, detail:a4d, edit: is26 ? "rot" : "rot1"});
+  const ex31 = Math.max(0, pa31.length - d31.length) * 3;
+  if(ex31) s31.rows.push({code:"추가", label:"교수 추가 Attending (나절당 3)", score:ex31, max:null, detail:`${pa31.length - d31.length}나절`});
+  s31.total = s31.rows.reduce((a,r)=>a+r.score,0);
+
+  /* 3-2 */
+  const s32 = {key:"3-2", title:"본3 2학기", max:50, rows:[]};
+  const ia = att("3-2","int"); const ip = sumProcs(ia);
+  const req2 = PROC.every(([k]) => ip[k] >= 2);
+  s32.rows.push({code:"II-A1", label:"통합 Attending 중 술기 (각 2회)", score:req2?10:0, max:10, cnts:cntTxt(ip,2), detail: req2 ? "필수 충족" : "필수 술기 미충족"});
+  const ext1 = PROC.reduce((a,[k]) => a + Math.max(0, ip[k]-2), 0);
+  const am = ia.filter(r=>r.half==="am").length, pm = ia.filter(r=>r.half==="pm").length;
+  s32.rows.push({code:"II-A2", label: (is26?"전공의 통합":"전공의") + " Attending 14시간 (오전2·오후2)", score:2.5*Math.min(am,2)+2.5*Math.min(pm,2), max:10, detail:`오전 ${am}/2 · 오후 ${pm}/2`, prog:(Math.min(am,2)+Math.min(pm,2))/4});
+  let exAtt = (Math.max(0,am-2)+Math.max(0,pm-2));
+  if(is26){
+    const mi = miniScore(att("3-2","mini"), m.mini32);
+    s32.rows.push({code:"II-A2", label:"미니인턴십 (6세션·직접 10회)", score:mi.score, max:10, detail:mi.detail, cnts:mi.cnts, edit:"mini32"});
+    exAtt += att("3-2","prof").length;
+  } else {
+    const pa = att("3-2","prof"); const d = PROFS5.filter(p => pa.some(r => r.prof===p));
+    s32.rows.push({code:"II-A2", label:"교수 Attending 5나절", score:d.length*2, max:10, detail: PROFS5.map(p => (d.includes(p)?"✓":"·")+p).join(" "), prog:d.length/5});
+    exAtt += Math.max(0, pa.length - d.length);
+  }
+  const sb = slideBand(m.slide);
+  s32.rows.push({code:"II-A3", label:"슬라이드 시험", score:sb||0, max:20, detail: m.slide!=null && m.slide!=="" ? `${m.slide}점 → ${sb}점` : "미입력", edit:"slide"});
+  if(ext1) s32.rows.push({code:"추가", label:"통합 Attending 추가 술기 (각 1)", score:ext1, max:null, detail:`${ext1}회`});
+  if(exAtt) s32.rows.push({code:"추가", label:"추가 Attending (나절당 3)", score:exAtt*3, max:null, detail:`${exAtt}나절`});
+  const as32 = recs.filter(r => r.kind==="assist" && sh(r)==="3-2").length + recs.filter(r => r.kind==="assist" && sh(r)==="3-1").length;
+  if(as32) s32.rows.push({code:"추가", label:"원내생진료실 Assist (내원당 3)", score:as32*3, max:null, detail:`${as32}회`});
+  s32.total = s32.rows.reduce((a,r)=>a+r.score,0);
+  const tot3 = s31.total + s32.total;
+  const cc = S.cfg.cohorts[String(student.cohort)] || {};
+  const past3 = cc.s4 && today() >= cc.s4, past4 = cc.end && today() > cc.end;
+  if(tot3 < 70) flags.push(past3 ? {t:`본3 합산 ${fmt(tot3)}점 — 70점 미만`, c:"bad"} : {t:`본3 합산 ${fmt(tot3)}/70점 (집계 마감 전)`, c:""});
+
+  /* 4 */
+  const s4 = {key:"4", title:"본4", max:60, rows:[]};
+  const ia4 = att("4","int"); const ip4 = sumProcs(ia4);
+  const am4 = ia4.filter(r=>r.half==="am").length, pm4 = ia4.filter(r=>r.half==="pm").length;
+  const req6 = PROC.every(([k]) => ip4[k] >= 6);
+  const a1raw = 2.5*Math.min(am4,6)+2.5*Math.min(pm4,6);
+  s4.rows.push({code:"III-A1", label:(is26?"전공의 통합":"소아치과 외래")+" Attending (오전6·오후6)", score: req6 ? a1raw : 0, max:30,
+    detail:`오전 ${am4}/6 · 오후 ${pm4}/6` + (req6 ? "" : ` · 필수 술기 미충족(보류 ${fmt(a1raw)}점)`), cnts:cntTxt(ip4,6), prog:(Math.min(am4,6)+Math.min(pm4,6))/12});
+  const cs = recs.filter(r => r.kind==="case" && sh(r)==="4");
+  const csOk = cs.some(r => r.rep && r.oral);
+  s4.rows.push({code:"III-A2", label:"진정·전신마취 증례 (수복 포함)", score:csOk?5:0, max:5, detail: cs.length ? `${cs.length}건 · 리포트/Oral ${csOk?"완료":"미완료"}` : "없음"});
+  const ds = att("4","disab"); const dsOk = ds.some(r => r.rep && r.oral);
+  s4.rows.push({code:"III-A3", label:"장애인 치과치료 Attending", score:dsOk?5:0, max:5, detail: ds.length ? `${ds.length}나절 · 리포트/Oral ${dsOk?"완료":"미완료"}` : "없음"});
+  const mi4 = miniScore(att("4","mini"), m.mini4);
+  s4.rows.push({code:"III-A4", label:"미니인턴십 (6세션·직접 10회)", score:mi4.score, max:10, detail:mi4.detail, cnts:mi4.cnts, edit:"mini4"});
+  const pr = practice(student, recs);
+  s4.rows.push({code:"III-A5", label:"Practice · 1st visit (본3+본4 누적)", score:pr.base+pr.bonus, max:10, detail:`술식 ${fmt(pr.prac)} · 초진 ${fmt(pr.fv)} · 질적가산 ${fmt(pr.bonus)} (가산 제외 ${fmt(pr.base)})`, prog:Math.min(1,pr.base/10)});
+  const ext4p = PROC.reduce((a,[k]) => a + Math.max(0, ip4[k]-6), 0);
+  const exAtt4 = Math.max(0,am4-6)+Math.max(0,pm4-6) + att("4","prof").length;
+  if(ext4p) s4.rows.push({code:"추가", label:"Attending 추가 술기 (각 1)", score:ext4p, max:null, detail:`${ext4p}회`});
+  if(exAtt4) s4.rows.push({code:"추가", label:"추가 Attending (나절당 3)", score:exAtt4*3, max:null, detail:`${exAtt4}나절`});
+  const as4 = recs.filter(r => r.kind==="assist" && sh(r)==="4").length;
+  if(as4) s4.rows.push({code:"추가", label:"원내생진료실 Assist (내원당 3)", score:as4*3, max:null, detail:`${as4}회` + (as4<2?" · 미니멈 2회":"")});
+  const cF = m.compF||{}, cO = m.compOE||{};
+  s4.rows.push({code:"역량", label:"불소도포 역량평가", score:0, max:null, pf:cF.pass||"", detail: cF.pass ? `${cF.pass==="P"?"Pass":"Non-pass"}${cF.date?" · "+cF.date:""}` : "미시행", edit:"compF"});
+  s4.rows.push({code:"역량", label:"구강검진·진단·치료계획 역량평가", score:0, max:null, pf:cO.pass||"", detail: cO.pass ? `${cO.pass==="P"?"Pass":"Non-pass"}${cO.date?" · "+cO.date:""}` : "미시행", edit:"compOE"});
+  s4.total = s4.rows.reduce((a,r)=>a+r.score,0);
+  const c4 = past4 ? "bad" : (past3 ? "warm" : "");
+  if(pr.base < 10) flags.push({t:`Practice·초진 ${fmt(pr.base)}/10점 (가산 제외)`, c:c4});
+  if(s4.total < 60) flags.push({t:`본4 ${fmt(s4.total)}/60점`, c:c4});
+  if(cF.pass!=="P") flags.push({t:"불소도포 역량평가 미통과", c:c4});
+  if(cO.pass!=="P") flags.push({t:"구강검진 역량평가 미통과", c:c4});
+  /* 지금 학기에 남은 요건 → 신청 안내 */
+  const needs = []; const ph = phaseOf(student, today());
+  const lack = (p, need) => PROC.filter(([k]) => p[k] < need).map(([k,l]) => `${l} ${need - p[k]}회`);
+  if(ph === "3-1"){
+    const miss = PROFS5.filter(p => !d31.includes(p));
+    if(miss.length) needs.push({t:`교수 Attending — 아직 ${miss.map(p=>"Pf."+p).join(", ")}`, kind:"prof", profs:miss});
+  }
+  if(ph === "3-1" || ph === "3-2"){
+    if(am < 2) needs.push({t:`전공의 통합 Attending 오전 ${2-am}회`, kind:"int", half:"am", n:2-am});
+    if(pm < 2) needs.push({t:`전공의 통합 Attending 오후 ${2-pm}회`, kind:"int", half:"pm", n:2-pm});
+    const l2 = lack(ip, 2); if(l2.length) needs.push({t:`통합 Attending 중 직접 시행 — ${l2.join(", ")}`});
+    if(is26){ const x = miniScore(att("3-2","mini"), m.mini32); const N = (S.cfg && S.cfg.miniN) || 6; if(x.sessions < N) needs.push({t:`미니인턴십 — 교수 진료 ${N - x.sessions}세션 더 (첫 세션부터 2주 안)`, kind:"mini", n:N - x.sessions}); else if(!x.score) needs.push({t:`미니인턴십 마무리 — ${x.detail}`}); }
+    else { const pa = att("3-2","prof"); const miss = PROFS5.filter(p => !pa.some(r => r.prof===p)); if(miss.length) needs.push({t:`교수 Attending — 아직 ${miss.map(p=>"Pf."+p).join(", ")}`, kind:"prof", profs:miss}); }
+  }
+  if(ph === "4"){
+    if(am4 < 6) needs.push({t:`${is26?"전공의 통합":"소아치과 외래"} Attending 오전 ${6-am4}회`, kind:"int", half:"am", n:6-am4});
+    if(pm4 < 6) needs.push({t:`${is26?"전공의 통합":"소아치과 외래"} Attending 오후 ${6-pm4}회`, kind:"int", half:"pm", n:6-pm4});
+    const l6 = lack(ip4, 6); if(l6.length) needs.push({t:`Attending 중 직접 시행 — ${l6.join(", ")}`});
+    if(!csOk) needs.push({t: cs.length ? "진정·전신마취 증례 리포트·Oral test" : "진정·전신마취 증례 1건 (수복 포함)", kind: cs.length ? null : "case"});
+    if(!dsOk) needs.push({t: ds.length ? "장애인 치과치료 리포트·Oral test" : "장애인 치과치료 Attending 1나절 (권장구)", kind: ds.length ? null : "disab"});
+    { const N = (S.cfg && S.cfg.miniN) || 6; if(mi4.sessions < N) needs.push({t:`미니인턴십 — 교수 진료 ${N - mi4.sessions}세션 더 (첫 세션부터 2주 안)`, kind:"mini", n:N - mi4.sessions}); else if(!mi4.score) needs.push({t:`미니인턴십 마무리 — ${mi4.detail}`}); }
+  }
+  if(pr.base < 10) needs.push({t:`원내생진료실 practice·초진 ${fmt(10 - pr.base)}점 더 (본4 마감까지, 가산 제외)`});
+  if(cF.pass !== "P") needs.push({t:"불소도포 역량평가 (본4 임상 마감 전)"});
+  if(ph === "4" && cO.pass !== "P") needs.push({t:"구강검진·진단·치료계획 역량평가 (미니인턴십 때)"});
+  return {sheets:[s31,s32,s4], flags, tot3, practice:pr, needs, phase:ph};
+}
+function miniScore(list, mm){
+  mm = mm || {};
+  const sessions = list.reduce((a,r)=>a+(+r.sessions||1),0);
+  const p = sumProcs(list); const total = p.OE+p.RD+p.F+p.TBI+p.ETC;
+  const each = PROC.every(([k]) => p[k] >= 1);
+  const ok = sessions>=6 && total>=10 && each && mm.rep && mm.oral;
+  return {sessions, score: ok?10:0, detail:`세션 ${sessions}/6 · 직접 ${total}/10 · 리포트 ${mm.rep?"✓":"미확인"} · Oral ${mm.oral?"✓":"미확인"}`, cnts:PROC.map(([k,l]) => ({k,l,n:p[k],ok:p[k]>=1}))};
+}
+function practice(student, recs){
+  const co = +student.cohort >= 2026 ? 2026 : 2025;
+  let prac=0, fv=0, bonus=0;
+  recs.forEach(r => {
+    if(r.kind==="prac"){ if(r.grade==="F") return; prac += PRAC_PTS[co][r.item]||0; bonus += GRADE_BONUS[r.grade]||0; }
+    if(r.kind==="fv"){ if(r.grade==="F") return; const f=r.fv||{}; const P=FV_PTS[co]; fv += (f.OE?P.OE:0)+(f.XR?P.XR:0)+(f.OHI?P.OHI:0)+(f.F?P.F:0); bonus += GRADE_BONUS[r.grade]||0; }
+  });
+  return {prac, fv, bonus, base:prac+fv};
+}
+const fmt = n => Number.isInteger(n) ? String(n) : n.toFixed(1);
+
+
+const MASCOT = `<svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="#d4eae5"/><g transform="translate(24 22) scale(3)"><path d="M12 2.2c-1.9 0-2.9.9-4.4.9S5.2 2.1 4 3.2C2.7 4.4 2.3 6.4 3.1 8.9c.6 1.8 1 3.1 1.2 5 .3 3.2 1.1 7.9 2.8 7.9 1.5 0 1.7-3.3 2.3-5.2.4-1.3 1.2-1.6 2.6-1.6s2.2.3 2.6 1.6c.6 1.9.8 5.2 2.3 5.2 1.7 0 2.5-4.7 2.8-7.9.2-1.9.6-3.2 1.2-5 .8-2.5.4-4.5-.9-5.7-1.2-1.1-2.4-.1-3.6-.1S13.9 2.2 12 2.2z" fill="#fff" stroke="#2a8a80" stroke-width=".9"/><circle cx="9.3" cy="9.6" r=".85" fill="#22313a"/><circle cx="14.7" cy="9.6" r=".85" fill="#22313a"/><path d="M9.8 12.1q2.2 1.9 4.4 0" fill="none" stroke="#22313a" stroke-width=".8" stroke-linecap="round"/><circle cx="7.6" cy="11.5" r="1" fill="#e2785a" opacity=".5"/><circle cx="16.4" cy="11.5" r="1" fill="#e2785a" opacity=".5"/></g><path d="M98 22l2 4.5 4.5 2-4.5 2-2 4.5-2-4.5-4.5-2 4.5-2z" fill="#f0bf4c"/><circle cx="20" cy="90" r="3" fill="#e2785a" opacity=".7"/></svg>`;
+/* ───────── 서버 주소 ─────────
+   앱스 스크립트를 웹 앱으로 배포한 뒤 받은 주소(…/exec)를 아래에 넣습니다. */
+const API_URL_DEFAULT = "";
+
+/* ───────── 상태 ───────── */
+const S = {
+  api:"", token:null, me:null, mustChange:false, setFirst:false, loginMode:"student", busy:false,
+  today:null, cfg:DEFAULT_CFG, weeks:{}, reqs:[], roster:[], inbox:[], staffNames:[], profs:[], mine:null,
+  stu:{}, staff:null, logs:null, logMonth:null, logQ:"", tab:null, week:null, sel:null,
+  filter:{from:null,to:null,status:"신청"}, draftMarks:{}, cfgDraft:null, preview:null, files:{}, err:""
+};
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ss = {get(k){try{return sessionStorage.getItem(k)}catch(e){return null}}, set(k,v){try{ v==null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v)}catch(e){}}};
+const ls = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function toast(msg){ const t=document.createElement("div"); t.className="toast"; t.textContent=msg; $("#toastRoot").replaceChildren(t); setTimeout(()=>{ if(t.parentNode) t.remove(); }, 3500); }
+const pad = n => String(n).padStart(2,"0");
+const iso = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today = () => S.today || iso(new Date());
+const parse = s => { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const addDays = (s,n) => { const d=parse(s); d.setDate(d.getDate()+n); return iso(d); };
+const mondayOf = s => { const d=parse(s); const w=(d.getDay()+6)%7; d.setDate(d.getDate()-w); return iso(d); };
+const md = s => { const d=parse(s); return `${d.getMonth()+1}/${d.getDate()}`; };
+const dow = s => ["일","월","화","수","목","금","토"][parse(s).getDay()];
+const stu = id => S.roster.find(x => x.id === id);
+const stuLabel = s => s ? `${s.year} ${s.no}. ${s.name}` : "(명단에 없음)";
+const ROLE = {owner:"주임교수", manager:"관리자(학생담당 전공의)", prof:"교수", resident:"전공의"};
+const isStaff = () => S.me && S.me.kind === "staff";
+const asStudent = () => !isStaff() || !!S.preview;
+const can = {
+  manage: () => isStaff() && (S.me.role==="owner" || S.me.role==="manager"),
+  score: () => isStaff() && ["owner","manager","prof"].includes(S.me.role),
+};
+
+/* ───────── 서버 호출 ───────── */
+async function api(action, data){
+  if(!S.api) throw {error:"no_api", message:"서버 주소가 아직 설정되지 않았습니다."};
+  let r;
+  try{
+    const res = await fetch(S.api, {method:"POST", body: JSON.stringify({action, token:S.token, ...(data||{})})});
+    r = await res.json();
+  }catch(e){ throw {error:"network", message:"서버에 연결하지 못했습니다. 인터넷 연결을 확인하고 다시 시도해 주세요."}; }
+  if(!r.ok){
+    if(r.error==="no_session"){ logoutLocal(); toast(r.message || "다시 로그인해 주세요."); }
+    if(r.error==="must_change"){ S.mustChange = true; render(); }
+    throw r;
+  }
+  return r;
+}
+async function act(fn, okMsg){
+  if(S.busy) return; S.busy = true; document.body.classList.add("busy");
+  try{ await fn(); if(okMsg) toast(okMsg); }
+  catch(e){ toast(e.message || "처리하지 못했습니다."); }
+  finally{ S.busy = false; document.body.classList.remove("busy"); }
+}
+async function reload(){
+  const r = await api("load");
+  S.today = r.today; S.me = r.me; S.cfg = {...DEFAULT_CFG, ...r.cfg, cohorts:{...DEFAULT_CFG.cohorts, ...(r.cfg.cohorts||{})}};
+  S.reqs = r.reqs || []; S.profs = r.profs || [];
+  const w = {};
+  (r.sched||[]).forEach(x => {
+    const m = mondayOf(x.date); if(!w[m]) w[m] = {week:m, days:[0,1,2,3,4,5].map(i => ({date:addDays(m,i), am:[], pm:[], closed:"", ga:"", sed:""}))};
+    const d = w[m].days[(parse(x.date).getDay()+6)%7]; if(!d) return;
+    if(x.closed) d.closed = x.closed; if(x.half==="am"||x.half==="pm") d[x.half] = x.s;
+  });
+  (r.events||[]).forEach(e => { const m = mondayOf(e.date); const d = w[m] && w[m].days[(parse(e.date).getDay()+6)%7]; if(d){ d.ga = e.ga; d.sed = e.sed; } });
+  S.weeks = w;
+  if(r.me.kind==="staff"){ S.roster = r.roster||[]; S.inbox = r.inbox||[]; S.staffNames = r.staffNames||[]; }
+  else { S.mine = r.mine; S.roster = r.mine ? [r.mine.student] : []; }
+  if(!S.week || !S.weeks[S.week]){ const ws = Object.keys(S.weeks).sort(); const t = mondayOf(today()); S.week = ws.find(x => x >= t) || ws[ws.length-1] || t; if(parse(today()).getDay()===0 && S.weeks[addDays(t,7)]) S.week = addDays(t,7); }
+  S.stu = {};
+  if(isStaff() && (S.sel || S.preview)) await loadStudent(S.preview || S.sel);
+  render();
+}
+async function loadStudent(sid){ if(!sid) return; const r = await api("get_student", {sid}); S.stu[sid] = r.data; }
+
+/* ───────── 신청 ───────── */
+function allItems(){ return S.reqs.map(r => ({...r, sid: r.sid || (r.mine ? S.me.id : "")})); }
+const live = it => it.status !== "취소";
+function slotCount(kind, date, half){ return allItems().filter(i => live(i) && i.kind===kind && i.date===date && (half==null || i.half===half)).length; }
+const held = it => it.status!=="취소" && it.status!=="불참";
+function slotItems(date, half, prof){ return allItems().filter(i => held(i) && ["prof","disab","mini"].includes(i.kind) && i.date===date && i.half===half && i.prof===prof); }
+function miniAt(date, half, prof){ return slotItems(date, half, prof).find(i => i.kind==="mini"); }
+function myMini(sid){ return allItems().filter(i => held(i) && i.kind==="mini" && i.sid===sid).sort((a,b)=>(a.date+a.half).localeCompare(b.date+b.half)); }
+function miniWeekStudents(week){ const o = new Set(); allItems().forEach(i => { if(held(i) && i.kind==="mini" && mondayOf(i.date)===week) o.add(i.sid || i.g || i.id); }); return o.size; }
+function myStudentId(){ if(S.preview) return S.preview; return isStaff() ? null : S.me && S.me.id; }
+function studentData(sid){ return isStaff() ? S.stu[sid] : S.mine; }
+function getMine(){
+  const sid = myStudentId(); const d = studentData(sid); const s = stu(sid); if(!d || !s) return null;
+  return {sid, name:s.name, cohort:s.cohort, result:compute(s, d.records, d.marks), recs:d.records.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"")).map(x => ({...x, sheet:x.sheet||phaseOf(s,x.date)}))};
+}
+const PREVIEW_MSG = "미리보기에서는 신청·제출되지 않습니다.";
+
+/* ───────── 그리기 ───────── */
+let rq = 0;
+function render(){ if(rq) return; rq = requestAnimationFrame(() => { rq = 0; draw(); }); }
+function tabsFor(){
+  if(!S.me || S.mustChange) return [];
+  if(asStudent()) return [["home","내 현황"],["sched","일정·신청"],["myscore","내 점수"],["submit","기록 제출"]];
+  const t = [["sched","일정·신청"],["confirm","시행 확인"],["score","점수표"]];
+  if(can.score()) t.push(["scan","제출·스캔"], ["log","로그"]);
+  if(can.manage()) t.push(["admin","명단·권한"]);
+  return t;
+}
+function draw(){
+  drawWho();
+  const tabs = tabsFor();
+  if(tabs.length && !tabs.some(([k]) => k===S.tab)) S.tab = tabs[0][0];
+  $("#tabs").innerHTML = tabs.map(([k,l]) => `<button role="tab" data-tab="${k}" aria-selected="${S.tab===k}">${l}</button>`).join("");
+  const m = $("#main");
+  const put = h => { if(m.__last === h) return; m.innerHTML = h; m.__last = h; };
+  if(!S.api) return put(viewSetup());
+  if(!S.me) return put(viewLogin());
+  if(S.tab==="admin" && can.manage() && !S.staff && !S._ls){ S._ls = true; loadStaff().catch(()=>{}).finally(()=>{ S._ls=false; }); }
+  if(S.tab==="log" && can.score() && !S.logs && !S._ll){ S._ll = true; loadLogs().finally(()=>{ S._ll=false; }); }
+  if(S.mustChange) return put(viewMustChange());
+  const pv = !!(S.preview && isStaff());
+  const html = (pv ? previewBar() : "") + (S.tab==="home" ? viewHome() : S.tab==="sched" ? viewSched() : S.tab==="confirm" ? viewConfirm() : S.tab==="score" ? viewScore()
+    : S.tab==="scan" ? viewScan() : S.tab==="log" ? viewLog() : S.tab==="admin" ? viewAdmin() : S.tab==="myscore" ? viewMyScore() : viewSubmit());
+  put(html);
+}
+function drawWho(){
+  let h = "";
+  if(S.me && isStaff()) h = `<span class="pill ${S.me.role==="owner"?"role-owner":"acc"}">${esc(S.me.name)} · ${esc(ROLE[S.me.role])}</span>` + (S.preview || S.mustChange ? "" : `<button class="btn sm" data-act="preview">학생 화면 보기</button><button class="btn sm" data-act="pwChange">비밀번호 변경</button>`) + `<button class="btn sm" data-act="logout">로그아웃</button>`;
+  else if(S.me){ const s = stu(S.me.id); h = `<span class="pill">${esc(stuLabel(s))}</span>` + (S.cfg.usePw && !S.mustChange ? `<button class="btn sm" data-act="pwChange">비밀번호 변경</button>` : "") + `<button class="btn sm" data-act="logout">로그아웃</button>`; }
+  $("#who").innerHTML = h;
+}
+const MASCOT_HTML = () => MASCOT;
+function viewSetup(){
+  return `<div class="section gate">${MASCOT}<h2>서버 주소 설정</h2><div class="small muted">이 페이지가 연결할 앱스 스크립트 웹 앱 주소(…/exec)를 넣어 주세요. 이 브라우저에만 저장됩니다.</div>
+    <div class="f2"><input id="apiUrl" placeholder="https://script.google.com/macros/s/…/exec"><button class="btn pri" data-act="setApi" style="justify-content:center">저장</button></div></div>`;
+}
+function viewLogin(){
+  const st = S.loginMode === "student";
+  return `<div class="section gate">${MASCOT}<h2>소아치과 원내생 ${st?"입장":"관리자 로그인"}</h2>
+    <div class="small muted">${st ? "학번과 이름을 입력하고 들어오세요." : "교수·전공의는 이름과 비밀번호로 들어옵니다."}</div>
+    <div class="f2">${st ? `<input id="lgNum" placeholder="학번 10자리" inputmode="numeric" maxlength="10" autocomplete="username"><input id="lgName" placeholder="이름" autocomplete="name"><input id="lgPw" type="password" placeholder="비밀번호 (정해 둔 경우)" autocomplete="current-password">`
+      : `<input id="lgName" placeholder="이름" autocomplete="username"><input id="lgPw" type="password" placeholder="비밀번호" autocomplete="current-password">`}
+      <button class="btn pri" data-act="login" style="justify-content:center">들어가기</button></div>
+    <button class="btn sm" data-act="loginMode">${st ? "교수·전공의 로그인" : "학생 입장으로"}</button>
+    ${st ? "" : `<div class="small muted">처음이면 관리자(학생담당 전공의)나 주임교수에게 임시 비밀번호를 받아 들어온 뒤 새 비밀번호를 정합니다.</div>`}</div>`;
+}
+function viewMustChange(){
+  const staff = isStaff();
+  return `<div class="section gate">${MASCOT}<h2>${S.setFirst ? "비밀번호 정하기" : "새 비밀번호 정하기"}</h2>
+    <div class="small muted">${staff ? "임시 비밀번호로 들어오셨습니다. 앞으로 쓸 비밀번호(8자 이상)를 정해 주세요." : "앞으로 들어올 때 쓸 비밀번호(4자 이상)를 정해 주세요."}</div>
+    <div class="f2"><input id="mcNew" type="password" placeholder="새 비밀번호" autocomplete="new-password"><input id="mcNew2" type="password" placeholder="새 비밀번호 확인" autocomplete="new-password"><button class="btn pri" data-act="mustChange" style="justify-content:center">저장하고 들어가기</button></div></div>`;
+}
+
+/* ── 일정·신청 ── */
+function weeksAvail(){ return Object.keys(S.weeks).sort(); }
+function viewSched(){
+  const parts = [];
+  const weeks = weeksAvail();
+  if(!weeks.length) return `<div class="section"><div class="empty">아직 진료 일정이 올라오지 않았습니다.</div></div>`;
+  if(!S.weeks[S.week]) S.week = weeks[weeks.length-1];
+  const wk = S.weeks[S.week]; const idx = weeks.indexOf(S.week);
+  const staffView = isStaff() && !S.preview;
+  const mySid = staffView ? S.sel : myStudentId();
+  const mine = it => mySid && it.sid === mySid;
+  const items = allItems().filter(live);
+  let g = `<div class="gl"></div>`;
+  wk.days.forEach((d,i) => {
+    const ev = [];
+    if(d.ga) ev.push(`<button class="evt" data-act="case" data-date="${d.date}" title="${esc(d.ga)}">전신마취</button>`);
+    if(d.sed) ev.push(`<button class="evt" data-act="case" data-date="${d.date}" title="${esc(d.sed)}">진정</button>`);
+    const nCase = items.filter(x => x.kind==="case" && x.date===d.date).length;
+    g += `<div class="gh ${d.date===today()?"today":""}"><div class="d">${DOW[i]} <span class="mono">${md(d.date)}</span></div>${ev.length?`<div class="row" style="gap:4px">${ev.join("")}${nCase?`<span class="small muted mono">${nCase}명</span>`:""}</div>`:""}</div>`;
+  });
+  for(const half of ["am","pm"]){
+    g += `<div class="gl">${HALF[half]}</div>`;
+    wk.days.forEach((d,i) => {
+      if(d.closed){ g += `<div class="gc closed">${esc(d.closed)}</div>`; return; }
+      if(i===5 && half==="pm"){ g += `<div class="gc closed">—</div>`; return; }
+      let c = "";
+      (d[half]||[]).forEach(e => {
+        const here = slotItems(d.date, half, e.prof);
+        if(e.off){ c += `<div class="slot off" title="${esc(e.off)}">Pf.${esc(e.prof)} <span class="lab">${esc(e.off)}</span></div>`; return; }
+        const mn = here.find(x => x.kind==="mini");
+        if(mn && !mine(mn)){ const who = staffView ? stuLabel(stu(mn.sid)) : "배정됨"; c += `<div class="slot taken" title="미니인턴십 ${esc(who)}">Pf.${esc(e.prof)} <span class="lab">미니 · ${esc(staffView ? (stu(mn.sid)||{}).name || "" : "배정됨")}</span></div>`; return; }
+        c += `<button class="slot ${here.some(mine)?"mine":""}" data-act="book" data-kind="${e.label==="권장구"?"disab":"prof"}" data-date="${d.date}" data-half="${half}" data-prof="${esc(e.prof)}" data-label="${esc(e.label)}">Pf.${esc(e.prof)} <span class="lab">${mn?"미니인턴십":esc(e.label)}</span>${here.length && !mn?`<span class="cnt">${here.length}</span>`:""}</button>`;
+      });
+      if(i<5){
+        const n = slotCount("int", d.date, half); const cap = +S.cfg.intCap||3;
+        const me = items.some(x => x.kind==="int" && x.date===d.date && x.half===half && mine(x));
+        c += `<button class="slot int ${n>=cap?"full":""} ${me?"mine":""}" data-act="book" data-kind="int" data-date="${d.date}" data-half="${half}">전공의 통합 진료 <span class="cnt">${n}/${cap}</span></button>`;
+      }
+      g += `<div class="gc">${c || `<span class="small muted">진료 없음</span>`}</div>`;
+    });
+  }
+  parts.push(`<div class="section">
+    <div class="row"><h2>진료 나절과 신청</h2><span class="spacer"></span>
+      <button class="btn sm" data-act="wk" data-d="-1" ${idx<=0?"disabled":""}>‹ 이전 주</button>
+      <select id="wkSel" aria-label="주 선택">${weeks.map(w => `<option value="${w}" ${w===S.week?"selected":""}>${md(w)} 주</option>`).join("")}</select>
+      <button class="btn sm" data-act="wk" data-d="1" ${idx>=weeks.length-1?"disabled":""}>다음 주 ›</button>
+    </div>
+    ${staffView ? studentPicker("selStu", S.sel, can.manage() ? "신청·확인할 학생" : "학생별 신청 보기") : ""}
+    <div class="legend"><span><i class="sw" style="background:var(--accent-soft)"></i>전공의 통합 진료(나절당 ${S.cfg.intCap}명)</span><span><i class="sw"></i>교수 진료 — 눌러서 Attending 신청</span><span><i class="sw" style="background:var(--mine);border-color:var(--mine-line)"></i>${staffView?"선택한 학생":"내"} 신청</span><span><i class="sw" style="background:var(--warm-soft)"></i>진정·전신마취 일정 — 눌러서 증례 신청</span><span><i class="sw" style="background:var(--chip);border-style:dashed"></i>미니인턴십으로 잡힌 나절</span></div>
+    <div class="scroll"><div class="grid">${g}</div></div>
+    <div class="small muted">교수 진료 일정은 소아치과 일정관리에서 가져옵니다. 예약 취소는 하루 전까지, 신청 단위는 반나절입니다. 무단 불참은 점수를 인정하지 않습니다.</div>
+  </div>`);
+  parts.push(viewMini(staffView));
+  parts.push(viewMyRequests(mySid, staffView));
+  return parts.join("");
+}
+function viewMini(staffView){
+  const w = S.week; const wk = S.weeks[w]; const N = S.cfg.miniN || 6;
+  const sid = staffView ? S.sel : myStudentId();
+  const mineList = sid ? myMini(sid) : [];
+  const canBook = staffView ? can.manage() && !!S.sel : true;
+  const rows = PROFS5.map(p => {
+    const chips = [];
+    (wk ? wk.days : []).forEach(d => ["am","pm"].forEach(h => (d[h]||[]).filter(e => e.prof===p && !e.off && !d.closed).forEach(e => {
+      const mn = miniAt(d.date, h, p); const others = slotItems(d.date, h, p).filter(x => x.kind!=="mini");
+      const lab = `${md(d.date)}(${dow(d.date)}) ${HALF[h]}`;
+      if(mn){ const me = sid && mn.sid===sid; chips.push(`<span class="pill ${me?"warm":""}" title="${esc(e.label)}">${lab} · ${me ? "내 세션" : esc(staffView ? (stu(mn.sid)||{}).name || "배정" : "배정됨")}</span>`); }
+      else if(!canBook || d.date <= today() || others.length) chips.push(`<span class="pill" style="opacity:.6" title="${others.length?"다른 학생이 Attending 신청함":""}">${lab}${others.length?" · Attending "+others.length:""}</span>`);
+      else chips.push(`<button class="btn sm" data-act="book" data-kind="mini" data-date="${d.date}" data-half="${h}" data-prof="${esc(p)}" data-label="${esc(e.label)}">${lab}</button>`);
+    })));
+    return `<tr><td>Pf.${esc(p)}</td><td><div class="row" style="gap:4px">${chips.join("") || `<span class="small muted">이번 주 진료 없음</span>`}</div></td></tr>`;
+  }).join("");
+  const first = mineList[0]; const last = first ? addDays(first.date, (S.cfg.miniDays||14)-1) : null;
+  const plan = sid ? `<div class="note info">${staffView?esc(stuLabel(stu(sid)))+" — ":"내 "}미니인턴십 ${mineList.length}/${N}세션${first?` · ${md(first.date)} ~ ${md(last)} 안에서 고를 수 있음`:""}${mineList.length?`<div class="small" style="margin-top:4px">${mineList.map(i => `${md(i.date)}(${dow(i.date)}) ${HALF[i.half]} Pf.${esc(i.prof)}${i.status==="시행"?" ✓":""}`).join(" · ")}</div>`:""}</div>` : "";
+  return `<div class="section"><div class="row"><h2>미니인턴십 — ${md(w)} 주 교수 진료 나절</h2><span class="pill">이번 주 ${miniWeekStudents(w)}/${S.cfg.miniPerWeek}명</span></div>
+    <div class="small muted">교수님 진료 나절을 하나씩 골라 ${N}세션을 채웁니다. 가능하면 한 주 안에 한 교수님 진료로 채우고, 어려우면 첫 세션부터 2주 안에서 다른 날이나 다른 교수님 진료로 채울 수 있습니다. 한 학생이 잡은 나절에는 다른 학생이 들어올 수 없습니다.</div>
+    ${plan}
+    <div class="scroll"><table><tbody>${rows}</tbody></table></div></div>`;
+}
+function viewMyRequests(sid, staffView){
+  if(!sid) return staffView ? `<div class="section"><div class="empty">학생을 고르면 그 학생의 신청 내역이 여기에 보입니다.</div></div>` : "";
+  const list = allItems().filter(i => i.sid===sid).sort((a,b)=>(b.date+b.half).localeCompare(a.date+a.half));
+  const s = stu(sid);
+  const rows = list.map(i => {
+    const canCancel = i.status==="신청" && (staffView ? can.manage() : i.date > today());
+    return `<tr><td class="mono">${md(i.date)+"("+dow(i.date)+")"}</td><td>${i.half?HALF[i.half]:""}</td><td>${esc(kindLabel(i.kind, s))}</td><td>${i.prof?"Pf."+esc(i.prof):""}</td><td>${statusPill(i.status)}</td><td>${canCancel?`<button class="btn sm danger" data-act="cancel" data-id="${esc(i.id)}">취소</button>`:""}</td></tr>`;
+  }).join("");
+  return `<div class="section"><h2>${staffView?esc(stuLabel(s))+" 신청 내역":"내 신청 내역"}</h2>${list.length?`<div class="scroll"><table><thead><tr><th>날짜</th><th>나절</th><th>종류</th><th>교수</th><th>상태</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">아직 신청한 Attending이 없습니다. 위 일정에서 나절을 눌러 신청하세요.</div>`}</div>`;
+}
+const kindLabel = (k, s) => (k==="int" && s && +s.cohort<2026) ? KIND_2025_INT : (KIND[k]||k);
+const statusPill = st => st==="시행" ? `<span class="pill ok">시행 확인</span>` : st==="불참" ? `<span class="pill bad">불참</span>` : st==="취소" ? `<span class="pill">취소</span>` : `<span class="pill warm">신청</span>`;
+function studentPicker(id, val, label){
+  const opts = ["본3","본4"].map(y => `<optgroup label="${y}">${S.roster.filter(s=>s.year===y).map(s => `<option value="${s.id}" ${s.id===val?"selected":""}>${s.no}. ${esc(s.name)}${s.group?" ("+s.group+"조)":""}</option>`).join("")}</optgroup>`).join("");
+  return `<div class="row"><label for="${id}" class="small muted">${label}</label><select id="${id}"><option value="">— 선택 —</option>${opts}</select></div>`;
+}
+
+/* ── 학생: 내 현황 ── */
+function previewBar(){
+  const s = stu(S.preview);
+  return `<div class="preview-bar"><b>학생 화면 미리보기</b><span>${esc(stuLabel(s))} 학생이 들어오면 이렇게 보입니다. 신청·제출 버튼은 눌러도 저장되지 않습니다.</span><span class="spacer"></span><button class="btn sm" data-act="preview">다른 학생</button><button class="btn sm pri" data-act="pvEnd">미리보기 끝내기</button></div>`;
+}
+const PH_LABEL = {"3-1":"본3 1학기","3-2":"본3 2학기","4":"본4"};
+function myLive(sid){ return allItems().filter(i => i.sid===sid && live(i)); }
+function suggest(need, sid){
+  const out = []; const from = addDays(today(), 1), to = addDays(today(), 28);
+  const mine = myLive(sid);
+  const busy = (date, half) => mine.some(i => i.date===date && (i.half===half || i.kind==="case"));
+  const days = []; weeksAvail().forEach(w => (S.weeks[w].days||[]).forEach(d => { if(d.date>=from && d.date<=to && !d.closed) days.push(d); }));
+  if(need.kind==="mini"){
+    const mm = myMini(sid); const N = S.cfg.miniN || 6;
+    const lo = mm[0] ? (mm[0].date > from ? mm[0].date : from) : from, hi = mm[0] ? addDays(mm[0].date, (S.cfg.miniDays||14)-1) : addDays(from, 20);
+    const pref = mm.map(i => i.prof);
+    const c = [];
+    days.concat([]).forEach(d => { if(d.date < lo || d.date > hi) return; ["am","pm"].forEach(h => (d[h]||[]).forEach(e => {
+      if(e.off || busy(d.date, h) || slotItems(d.date, h, e.prof).length) return;
+      c.push({act:"book", kind:"mini", date:d.date, half:h, prof:e.prof, plabel:e.label, label:`${md(d.date)}(${dow(d.date)}) ${HALF[h]} · Pf.${e.prof}`, w: pref.includes(e.prof) ? 0 : 1});
+    })); });
+    c.sort((a,b) => a.w - b.w || (a.date+a.half).localeCompare(b.date+b.half));
+    return c.slice(0, Math.min(8, Math.max(4, N - mm.length)));
+  }
+  for(const d of days){
+    if(out.length >= 4) break;
+    if(need.kind==="case"){ if((d.ga||d.sed) && slotCount("case", d.date) < S.cfg.caseCap && !busy(d.date,"")) out.push({act:"case", date:d.date, label:`${md(d.date)}(${dow(d.date)}) ${d.ga?"전신마취":"진정"}`}); continue; }
+    for(const h of ["am","pm"]){
+      if(out.length >= 4 || busy(d.date, h)) continue;
+      if(need.kind==="int"){ if(h!==need.half || parse(d.date).getDay()===6) continue; if(slotCount("int", d.date, h) < S.cfg.intCap) out.push({act:"book", kind:"int", date:d.date, half:h, label:`${md(d.date)}(${dow(d.date)}) ${HALF[h]} · 남은 자리 ${S.cfg.intCap - slotCount("int", d.date, h)}`}); continue; }
+      for(const e of (d[h]||[])){
+        if(e.off || out.length >= 4) continue;
+        if(need.kind==="disab" && e.label!=="권장구") continue;
+        if(need.kind==="prof" && need.profs && !need.profs.includes(e.prof)) continue;
+        if(need.kind==="prof" && need.profs && out.some(o => o.prof===e.prof)) continue;
+        out.push({act:"book", kind:need.kind, date:d.date, half:h, prof:e.prof, plabel:e.label, label:`${md(d.date)}(${dow(d.date)}) ${HALF[h]} · Pf.${e.prof}`});
+      }
+    }
+  }
+  return out;
+}
+function viewHome(){
+  const sid = myStudentId(); const s = stu(sid); if(!s) return `<div class="section"><div class="empty">학생 정보를 불러오는 중입니다…</div></div>`;
+  const d = getMine(); if(!d) return `<div class="section"><div class="empty">학생 정보를 불러오는 중입니다…</div></div>`;
+  const r = d.result;
+  const ph = phaseOf(s, today()); const cc = S.cfg.cohorts[String(s.cohort)] || {};
+  const due = ph==="4" ? cc.end : addDays(cc.s4 || today(), -1);
+  const live2 = myLive(sid);
+  const pending = live2.filter(i => i.status==="신청");
+  const needs = (r.needs || []).map(n => {
+    const x = {...n};
+    if(n.kind==="int"){ const k = pending.filter(i => i.kind==="int" && i.half===n.half).length; x.booked = k; x.left = Math.max(0, (n.n||0) - k); }
+    if(n.kind==="prof" && n.profs){ const got = pending.filter(i => i.kind==="prof").map(i => i.prof); x.profs = n.profs.filter(p => !got.includes(p)); x.left = x.profs.length; x.booked = n.profs.length - x.left; }
+    if(n.kind==="mini"){ const k = pending.filter(i => i.kind==="mini").length; x.booked = k; x.left = Math.max(0, (n.n||0) - k); }
+    if(["case","disab"].includes(n.kind)){ const k = pending.filter(i => i.kind===n.kind).length; x.booked = k; x.left = k ? 0 : 1; }
+    return x;
+  });
+  const tiles = r.sheets.map(sh => `<div class="tile ${sh.key===ph?"cur":""}"><span class="small muted">${sh.title}${sh.key===ph?" · 지금":""}</span><span class="v">${fmt(sh.total)}<small> / ${sh.max}</small></span></div>`).join("");
+  const needHtml = needs.length ? needs.map(n => {
+    const done = n.kind && n.left===0;
+    const sg = (!done && n.kind) ? suggest(n, sid) : [];
+    return `<div class="need"><span class="dot ${done?"done":""}">${done?"✓":"!"}</span><div><div>${esc(n.t)}${n.booked?` <span class="pill warm">${n.booked}건 신청해 둠</span>`:""}</div>
+      ${done ? `<div class="small muted">신청해 두었습니다. 참여 후 전공의가 시행 확인하면 반영됩니다.</div>` : n.kind ? (sg.length ? `<div class="small muted">4주 안에 신청할 수 있는 나절</div><div class="sugg">${sg.map(o => o.act==="case" ? `<button data-act="case" data-date="${o.date}">${esc(o.label)}</button>` : `<button data-act="book" data-kind="${o.kind}" data-date="${o.date}" data-half="${o.half}" data-prof="${esc(o.prof||"")}" data-label="${esc(o.plabel||"")}">${esc(o.label)}</button>`).join("")}</div>` : `<div class="small muted">4주 안에 빈 나절이 없습니다. 일정·신청 탭에서 더 뒤의 주를 확인하세요.</div>`) : `<div class="small muted">담당 전공의·교수님 확인이 필요한 항목입니다.</div>`}</div></div>`;
+  }).join("") : `<div class="empty">지금 학기에 남은 요건이 없습니다.</div>`;
+  const up = live2.filter(i => i.date >= today()).sort((a,b)=>(a.date+a.half).localeCompare(b.date+b.half)).slice(0,6);
+  const upHtml = up.length ? `<div class="scroll"><table><tbody>${up.map(i => `<tr><td class="mono">${md(i.date)+"("+dow(i.date)+")"}</td><td>${i.half?HALF[i.half]:""}</td><td>${esc(kindLabel(i.kind,s))}</td><td>${i.prof?"Pf."+esc(i.prof):""}</td><td>${statusPill(i.status)}</td></tr>`).join("")}</tbody></table></div>` : `<div class="empty">다가오는 신청이 없습니다.</div>`;
+  return `<div class="section"><div class="hero">${MASCOT}<div><div class="nm">${esc(s.name)} 학생</div>
+      <div class="row small muted"><span class="pill">${esc(s.year)} ${s.no}번</span>${s.group?`<span class="pill">${s.group}조</span>`:""}<span class="pill acc">지금 ${PH_LABEL[ph]}</span><span>${esc(cc.label||"")} 기준 · ${PH_LABEL[ph]} 마감 ${due?md(due):""}</span></div></div></div>
+      <div class="tiles">${tiles}</div>${flagRow(r.flags.filter(f=>f.c))}</div>
+    <div class="section"><div class="row"><h2>${PH_LABEL[ph]}에 해야 할 것</h2><span class="spacer"></span><button class="btn sm" data-tab="sched">전체 일정 보기</button></div>
+      <div class="small muted">아래 날짜를 누르면 바로 신청 창이 열립니다. 신청 단위는 반나절, 취소는 하루 전까지입니다.</div>${needHtml}</div>
+    <div class="section"><div class="row"><h2>다가오는 신청</h2><span class="spacer"></span><button class="btn sm" data-tab="sched">신청 내역 전체</button></div>${upHtml}</div>`;
+}
+function flagRow(fl){
+  if(!fl.length) return `<div class="flags"><span class="pill ok">유급 기준에 걸리는 항목 없음</span></div>`;
+  return `<div class="flags"><span class="small muted">유급 기준 점검</span>${fl.map(f=>`<span class="pill ${f.c}">${esc(f.t)}</span>`).join("")}</div>`;
+}
+function viewMyScore(){
+  const d = getMine(); if(!d) return `<div class="section"><div class="empty">불러오는 중입니다…</div></div>`;
+  const r = d.result; const s = stu(d.sid);
+  let h = `<div class="section"><div class="row"><h2>${esc(d.name)} 점수표</h2></div>${flagRow(r.flags.filter(f=>f.c))}</div>`;
+  h += `<div class="sheets">${r.sheets.map(sh => sheetCard(sh, {}, false)).join("")}</div>`;
+  h += `<div class="section"><h2>확인된 기록</h2>${d.recs.length?`<div class="scroll"><table><thead><tr><th>날짜</th><th>나절</th><th>학기</th><th>종류</th><th>내용</th></tr></thead><tbody>${d.recs.map(x=>`<tr><td class="mono">${x.date?md(x.date):""}</td><td>${x.half?HALF[x.half]:""}</td><td>${esc(x.sheet)}</td><td>${esc(recLabel(x,s))}</td><td class="small">${esc(recDetail(x))}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">아직 기록이 없습니다.</div>`}</div>`;
+  return h;
+}
+function viewSubmit(){
+  const sid = myStudentId(); const d = studentData(sid);
+  const items = ((d && d.subs) || []).slice().sort((a,b)=>(b.at||"").localeCompare(a.at||""));
+  return `<div class="section"><h2>원내생진료실 기록 보고</h2>
+    <div class="small muted">원내생진료실에서 한 practice·초진·assist를 보고하면 교수·전공의가 질적평가와 함께 확인합니다. 병록번호만 적고 환자 이름은 적지 마세요.</div>
+    <div class="row"><select id="sbKind"><option value="prac">Practice</option><option value="fv">1st visit(초진)</option><option value="assist">Assist</option></select>
+      <select id="sbItem">${PRAC_ITEMS.map(([v,l])=>`<option value="${v}">${l}</option>`).join("")}</select>
+      <input type="date" id="sbDate" value="${today()}"></div>
+    <div class="row"><label class="small"><input type="checkbox" id="fvOE"> 구강검진</label><label class="small"><input type="checkbox" id="fvXR"> 방사선</label><label class="small"><input type="checkbox" id="fvOHI"> 구강위생교육(착색)</label><label class="small"><input type="checkbox" id="fvF"> 불소</label><span class="small muted">(초진일 때)</span></div>
+    <div class="row"><input id="sbChart" placeholder="병록번호" style="width:130px"><input id="sbRes" placeholder="지도 전공의" style="width:120px"><input id="sbNote" placeholder="메모(부위 등)" style="flex:1;min-width:140px"><button class="btn pri" data-act="submitCase">보고</button></div></div>
+   <div class="section"><h2>서명받은 점수표 올리기</h2><div class="small muted">종이 점수표에 서명을 받은 부분을 사진(JPG·PNG)이나 PDF로 올리면 교수·전공의가 확인해 반영합니다.</div>
+    <div class="row"><input id="sbScanNote" placeholder="메모(어느 항목인지)" style="flex:1;min-width:160px"><label class="btn">파일 고르기<input type="file" id="sbScan" accept="image/jpeg,image/png,image/webp,application/pdf" hidden></label></div></div>
+   <div class="section"><h2>보낸 기록</h2>${items.length?`<div class="scroll"><table><thead><tr><th>날짜</th><th>내용</th><th>상태</th></tr></thead><tbody>${items.map(it=>`<tr><td class="mono">${it.date?md(it.date):""}</td><td>${it.type==="scan"?"점수표 스캔":esc(caseLabel(it))}</td><td>${it.status==="반영"?`<span class="pill ok">반영</span>`:it.status==="반려"?`<span class="pill bad">반려</span>`:`<span class="pill warm">대기</span>`}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">아직 보낸 기록이 없습니다.</div>`}</div>`;
+}
+
+/* ── 시행 확인 ── */
+function viewConfirm(){
+  const f = S.filter;
+  const list = allItems().filter(i => (f.status==="전체" || i.status===f.status) && i.date>=f.from && i.date<=f.to).sort((a,b)=>(a.date+a.half).localeCompare(b.date+b.half));
+  const rows = list.map(i => { const s = stu(i.sid); return `<tr><td class="mono">${md(i.date)+"("+dow(i.date)+")"}</td><td>${i.half?HALF[i.half]:""}</td><td>${esc(kindLabel(i.kind,s))}</td><td>${i.prof?"Pf."+esc(i.prof):""}</td><td>${esc(stuLabel(s))}</td><td>${statusPill(i.status)}${i.doneBy?` <span class="small muted">${esc(i.doneBy)}</span>`:""}</td>
+    <td class="row" style="gap:4px">${i.status==="신청"?`<button class="btn sm pri" data-act="confirm" data-id="${esc(i.id)}">시행 확인</button><button class="btn sm" data-act="noshow" data-id="${esc(i.id)}">불참</button>`:""}</td></tr>`; }).join("");
+  const ib = S.inbox.filter(it => it.type!=="scan").map(it => { const s = stu(it.sid); return `<tr><td class="mono">${it.date?md(it.date):""}</td><td>${esc(stuLabel(s))}</td><td>${esc(caseLabel(it))}</td><td class="small">${esc(it.note||"")}${it.resident?` · 전공의 ${esc(it.resident)}`:""}${it.chart?` · 병록 ${esc(it.chart)}`:""}</td>
+     <td class="row" style="gap:4px">${can.score()?`<button class="btn sm pri" data-act="inboxOk" data-id="${esc(it.id)}">확인·반영</button><button class="btn sm danger" data-act="inboxNo" data-id="${esc(it.id)}">반려</button>`:""}</td></tr>`; }).join("");
+  return `<div class="section"><div class="row"><h2>Attending 시행 확인</h2><span class="spacer"></span>
+      <input type="date" id="fFrom" value="${f.from}"> ~ <input type="date" id="fTo" value="${f.to}">
+      <select id="fSt">${["신청","시행","불참","취소","전체"].map(x=>`<option ${x===f.status?"selected":""}>${x}</option>`).join("")}</select><button class="btn sm" data-act="refresh">새로고침</button></div>
+    <div class="small muted">학생이 실제로 참여하면 "시행 확인"을 눌러 그 나절에 직접 한 술기(구강검진·러버댐·불소·TBI)를 함께 기록합니다. 확인한 내용은 바로 점수표에 들어갑니다.</div>
+    ${list.length?`<div class="scroll"><table><thead><tr><th>날짜</th><th>나절</th><th>종류</th><th>교수</th><th>학생</th><th>상태</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">이 기간에 ${esc(f.status)} 상태인 신청이 없습니다.</div>`}</div>
+   <div class="section"><h2>학생 보고 (원내생진료실)</h2><div class="small muted">학생이 보고한 practice·초진·assist입니다. 확인하면서 질적평가를 매기면 점수표에 들어갑니다. 점수표 사진은 '제출·스캔' 탭에서 봅니다.</div>
+    ${ib?`<div class="scroll"><table><thead><tr><th>날짜</th><th>학생</th><th>내용</th><th>메모</th><th></th></tr></thead><tbody>${ib}</tbody></table></div>`:`<div class="empty">확인을 기다리는 보고가 없습니다.</div>`}</div>`;
+}
+function caseLabel(it){
+  if(it.kind==="prac") return "Practice · " + (PRAC_ITEMS.find(x=>x[0]===it.item)||["",it.item])[1];
+  if(it.kind==="fv") return "1st visit · " + ["OE","XR","OHI","F"].filter(k=>it.fv&&it.fv[k]).map(k=>({OE:"구강검진",XR:"방사선",OHI:"구강위생교육",F:"불소"}[k])).join("·");
+  if(it.kind==="assist") return "원내생진료실 Assist";
+  return it.kind;
+}
+
+/* ── 점수표 ── */
+function viewScore(){
+  const sid = S.sel; const s = stu(sid);
+  let h = `<div class="section"><div class="row"><h2>점수표</h2><span class="spacer"></span>${studentPicker("selStu2", sid, "학생")}</div>`;
+  if(!s) return h + `<div class="empty">학생을 고르면 본3 1학기·본3 2학기·본4 점수표가 자동 계산되어 나옵니다.</div></div>`;
+  const d = S.stu[sid]; if(!d) return h + `<div class="empty">불러오는 중입니다…</div></div>`;
+  const recs = d.records;
+  const m = S.draftMarks[sid] || d.marks || {};
+  const r = compute(s, recs, m);
+  const dirty = !!S.draftMarks[sid] && can.score();
+  h += `<div class="row"><span class="pill acc">${esc(stuLabel(s))}</span>${s.group?`<span class="pill">${s.group}조</span>`:""}<span class="pill">${esc((S.cfg.cohorts[String(s.cohort)]||{}).label||s.cohort)} 기준</span><span class="spacer"></span>
+      ${dirty?`<button class="btn pri" data-act="saveMarks">입력값 저장</button><button class="btn" data-act="dropMarks">되돌리기</button>`:""}
+      ${can.score()?`<button class="btn" data-act="addRec">기록 추가</button>`:`<span class="small muted">보기 전용</span>`}</div>
+    ${flagRow(r.flags)}</div>`;
+  h += `<div class="sheets">${r.sheets.map(sh => sheetCard(sh, m, can.score())).join("")}</div>`;
+  const rows = recs.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"")).map(x => `<tr><td class="mono">${x.date?md(x.date):""}</td><td>${x.half?HALF[x.half]:""}</td><td>${esc(x.sheet||phaseOf(s,x.date))}</td><td>${esc(recLabel(x, s))}</td><td class="small">${esc(recDetail(x))}</td><td class="small muted">${x.source==="scan"?"스캔":x.source==="inbox"?"학생 보고":x.source==="manual"?"직접 입력":"온라인 확인"} · ${esc(x.by||"")}</td><td>${can.manage()?`<button class="btn sm danger" data-act="delRec" data-id="${esc(x.id)}">삭제</button>`:""}</td></tr>`).join("");
+  h += `<div class="section"><h2>기록 ${recs.length}건</h2>${recs.length?`<div class="scroll"><table><thead><tr><th>날짜</th><th>나절</th><th>학기</th><th>종류</th><th>내용</th><th>출처·입력자</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">아직 기록이 없습니다. 시행 확인, 학생 보고 반영, "기록 추가"로 쌓입니다.</div>`}</div>`;
+  return h;
+}
+function recLabel(x, s){
+  if(x.kind==="att") return x.type==="int" ? kindLabel("int", s) : (KIND[x.type]||x.type);
+  if(x.kind==="case") return KIND.case;
+  if(x.kind==="prac"||x.kind==="fv"||x.kind==="assist") return caseLabel(x);
+  return x.kind;
+}
+function recDetail(x){
+  const a = [];
+  if(x.prof) a.push("Pf."+x.prof);
+  if(x.sessions>1) a.push(`${x.sessions}세션`);
+  if(x.procs){ const p = Object.entries(x.procs).filter(([,v])=>+v).map(([k,v])=>`${k} ${v}`); if(p.length) a.push(p.join(" · ")); }
+  if(x.grade) a.push(`질적 ${x.grade}`);
+  if(x.rep||x.oral) a.push(`리포트 ${x.rep?"✓":"·"} Oral ${x.oral?"✓":"·"}`);
+  if(x.chart) a.push(`병록 ${x.chart}`);
+  if(x.note) a.push(x.note);
+  return a.join(" · ");
+}
+function sheetCard(sh, m, editable){
+  const items = sh.rows.map(r => {
+    const pct = r.prog!=null ? r.prog : (r.max ? Math.min(1, r.score/r.max) : null);
+    const cnts = r.cnts ? `<div class="cnts">${r.cnts.map(c=>`<span class="${c.ok?"ok":""}">${esc(c.l)} ${c.n}</span>`).join("")}</div>` : "";
+    const sc = r.pf!==undefined ? (r.pf ? `<span class="pill ${r.pf==="P"?"ok":"bad"}">${r.pf==="P"?"Pass":"NP"}</span>` : `<span class="pill">미시행</span>`) : `${fmt(r.score)}${r.max?`<small>/${r.max}</small>`:""}`;
+    return `<div class="item"><div class="code">${esc(r.code)}</div><div><div>${esc(r.label)}</div><div class="det">${esc(r.detail||"")}</div>${cnts}${pct!=null && r.max?`<div class="bar-meter"><i style="width:${Math.round(pct*100)}%"></i></div>`:""}${editable&&r.edit?editor(r.edit, m):""}</div><div class="sc">${sc}</div></div>`;
+  }).join("");
+  return `<div class="sheet"><div class="sh"><h3>${sh.title}</h3><span class="small muted">기본 ${sh.max}점</span><span class="tot">${fmt(sh.total)}<small> 점</small></span></div>${items}</div>`;
+}
+function editor(kind, m){
+  const sel = (f, opts, v) => `<select data-mk="${f}">${opts.map(([val,l])=>`<option value="${val}" ${String(v??"")===val?"selected":""}>${l}</option>`).join("")}</select>`;
+  const chk = (f, v, l) => `<label class="small"><input type="checkbox" data-mk="${f}" ${v?"checked":""}> ${l}</label>`;
+  const num = (f, v, l, w=64) => `<label class="small">${l} <input type="number" data-mk="${f}" value="${esc(v??"")}" style="width:${w}px" min="0"></label>`;
+  if(kind==="pqe") return `<div class="edit">${sel("pqe",[["","미입력"],["P","Pass"],["NP","Non-pass"]],m.pqe)}</div>`;
+  if(kind==="sem") return `<div class="edit"><label class="small">1차 ${sel("sem1",[["","-"],["A","A"],["B","B"],["C","C"]],m.sem1)}</label><label class="small">2차 ${sel("sem2",[["","-"],["A","A"],["B","B"],["C","C"]],m.sem2)}</label></div>`;
+  if(kind==="rot"){ const r=m.rot||{}; return `<div class="edit">${chk("rot.done",r.done,"평가 완료")}${num("rot.attitude",r.attitude,"태도·이탈",48)}${num("rot.absent",r.absent,"결석",48)}${num("rot.late",r.late,"지각",48)}</div>`; }
+  if(kind==="rot1") return `<div class="edit">${num("rot1",m.rot1,"점수(0–10)")}</div>`;
+  if(kind==="slide") return `<div class="edit">${num("slide",m.slide,"100점 만점 점수",72)}</div>`;
+  if(kind==="mini32"||kind==="mini4"){ const x=m[kind]||{}; return `<div class="edit">${chk(kind+".rep",x.rep,"리포트")}${chk(kind+".oral",x.oral,"Oral test")}</div>`; }
+  if(kind==="compF"||kind==="compOE"){ const x=m[kind]||{}; return `<div class="edit">${sel(kind+".pass",[["","미시행"],["P","Pass"],["NP","Non-pass"]],x.pass)}<input type="date" data-mk="${kind}.date" value="${esc(x.date||"")}"></div>`; }
+  return "";
+}
+
+/* ── 제출·스캔 (교수·전공의) ── */
+function viewScan(){
+  const scans = S.inbox.filter(it => it.type==="scan");
+  const rows = scans.map(it => { const s = stu(it.sid); const f = S.files[it.id];
+    return `<div class="section"><div class="row"><h3>${esc(stuLabel(s))}</h3><span class="small muted">${esc(it.at||"")} 제출</span><span class="spacer"></span>
+      ${f ? "" : `<button class="btn sm" data-act="viewFile" data-id="${esc(it.id)}">사진 보기</button>`}<button class="btn sm" data-act="scanRec" data-sid="${esc(it.sid)}">이 학생 기록 추가</button><button class="btn sm pri" data-act="inboxOk" data-id="${esc(it.id)}">반영 완료</button><button class="btn sm danger" data-act="inboxNo" data-id="${esc(it.id)}">반려</button></div>
+      ${it.note?`<div class="small">${esc(it.note)}</div>`:""}
+      ${f ? (f.mime==="application/pdf" ? `<div class="note">PDF 파일입니다. <a href="${f.url}" target="_blank" rel="noopener">새 탭에서 열기</a></div>` : `<img src="${f.url}" alt="제출한 점수표" style="max-width:100%;border:1px solid var(--line);border-radius:8px">`) : ""}</div>`; }).join("");
+  return `<div class="section"><h2>종이 점수표 사진</h2><div class="small muted">학생이 올린 서명된 점수표입니다. 사진을 보면서 "이 학생 기록 추가"로 항목을 넣고, 다 넣으면 "반영 완료"를 누르세요. 사진은 공용 계정 드라이브의 '${"소아치과 원내생 제출 파일"}' 폴더에 보관됩니다.</div>
+    ${scans.length?"":`<div class="empty">확인을 기다리는 사진이 없습니다.</div>`}</div>${rows}`;
+}
+
+/* ── 로그 ── */
+function viewLog(){
+  const L = S.logs;
+  if(!L) return `<div class="section"><div class="empty">불러오는 중입니다…</div></div>`;
+  const months = L.months.length ? L.months : [today().slice(0,7)];
+  return `<div class="section"><div class="row"><h2>로그</h2><span class="spacer"></span><select id="logM">${months.map(m=>`<option value="${m}" ${m===S.logMonth?"selected":""}>${m.slice(0,4)}년 ${+m.slice(5)}월</option>`).join("")}</select><input id="logQ" placeholder="이름·동작·학생 검색" value="${esc(S.logQ||"")}" style="width:180px"><button class="btn sm" data-act="logSearch">검색</button></div>
+    <div class="small muted">입장·로그인 실패, 신청·취소, 시행 확인, 불참, 기록 추가·삭제, 점수 입력(바뀐 값), 보고·스캔 처리, 권한·비밀번호·설정 변경이 누가 언제 했는지와 함께 남습니다. 원본은 시트의 '로그' 탭에 있습니다.</div>
+    ${L.logs.length?`<div class="scroll"><table><thead><tr><th>시각</th><th>사람</th><th>동작</th><th>학생</th><th>내용</th></tr></thead><tbody>${L.logs.map(e=>`<tr><td class="mono small">${esc(e.t.slice(5,16).replace("T"," "))}</td><td>${esc(e.who)} <span class="small muted">${esc(e.role||"")}</span></td><td>${esc(e.a)}</td><td>${esc(e.sname||e.s||"")}</td><td class="small">${esc(e.d)}</td></tr>`).join("")}</tbody></table></div>${L.total>L.logs.length?`<div class="small muted">최근 ${L.logs.length}건만 보입니다. 전체는 시트에서 보세요.</div>`:""}`:`<div class="empty">이 달에 남은 기록이 없습니다.</div>`}</div>`;
+}
+
+/* ── 명단·권한 ── */
+function viewAdmin(){
+  const st = S.staff;
+  const owner = S.me.role === "owner";
+  const roleSel = (x) => `<select data-role="${esc(x.id)}" ${x.role==="owner" || (x.role==="manager" && !owner) ? "disabled" : ""}>${(x.role==="owner"?[["owner","주임교수"]]:[]).concat(owner?[["manager","관리자(학생담당 전공의)"]]:(x.role==="manager"?[["manager","관리자(학생담당 전공의)"]]:[])).concat([["prof","교수"],["resident","전공의"]]).map(([v,l])=>`<option value="${v}" ${x.role===v?"selected":""}>${l}</option>`).join("")}</select>`;
+  const staffRows = !st ? `<tr><td colspan="5" class="muted">불러오는 중…</td></tr>` : st.map(x => `<tr class="${x.active?"":"muted"}"><td>${esc(x.name)}</td><td>${x.kind==="교수"?"교수":"전공의 R"+esc(x.year||"")}</td><td>${roleSel(x)}</td>
+      <td>${x.hasPw ? (x.temp ? `<span class="pill warm">임시</span>` : `<span class="pill ok">설정됨</span>`) : `<span class="pill">없음</span>`} ${x.id!==S.me.id && (x.role!=="owner"||owner)?`<button class="btn sm" data-act="resetPw" data-id="${esc(x.id)}">${x.hasPw?"임시 비밀번호 재발급":"임시 비밀번호 발급"}</button>`:""}</td>
+      <td>${x.role==="owner"?"":`<button class="btn sm" data-act="setActive" data-id="${esc(x.id)}" data-on="${x.active?0:1}">${x.active?"사용 중지":"다시 사용"}</button>`}</td></tr>`).join("");
+  const c = S.cfgDraft || S.cfg;
+  const coh = ["2026","2025"].map(k => { const x = c.cohorts[k]||{}; return `<tr><td>${esc(x.label||k)}</td><td>${k==="2026"?"현 본3":"현 본4"}</td><td><input type="date" data-cfg="${k}_본3_2학기시작" value="${esc(x.s32||"")}"></td><td><input type="date" data-cfg="${k}_본4시작" value="${esc(x.s4||"")}"></td><td><input type="date" data-cfg="${k}_본4마감" value="${esc(x.end||"")}"></td></tr>`; }).join("");
+  const cnt = y => S.roster.filter(s=>s.year===y).length;
+  return `<div class="section"><h2>교수·전공의와 권한</h2>
+      <div class="small muted">소아치과 일정관리의 인력 명단입니다. 역할에 따라 할 수 있는 일이 다릅니다. 처음 들어오는 사람에게는 "임시 비밀번호 발급"을 눌러 나온 6자리 숫자를 직접 알려 주세요. 그 사람이 처음 로그인할 때 새 비밀번호로 바꿉니다.</div>
+      <div class="kv small"><span class="muted">관리자</span><span>학생 대신 신청·취소, 시행 확인, 점수 입력, 기록 삭제, 명단·권한·설정, 임시 비밀번호 발급</span><span class="muted">교수</span><span>모든 화면 보기, 시행 확인, 점수 입력·기록 추가, 보고·스캔 처리, 로그 보기</span><span class="muted">전공의</span><span>일정 보기, 시행 확인·불참 처리, 점수표 보기</span></div>
+      <div class="scroll"><table><thead><tr><th>이름</th><th>구분</th><th>역할</th><th>비밀번호</th><th></th></tr></thead><tbody>${staffRows}</tbody></table></div>
+      <div class="row"><input id="nsName" placeholder="새 사람 이름" style="width:120px"><select id="nsKind"><option>전공의</option><option>교수</option></select><select id="nsYear"><option value="1">R1</option><option value="2">R2</option><option value="3">R3</option><option value="">-</option></select><button class="btn" data-act="addStaff">인원 추가</button></div></div>
+    <div class="section"><div class="row"><h2>학기 구분과 기준</h2><span class="spacer"></span><button class="btn pri" data-act="saveCfg">저장</button></div>
+      <div class="small muted">기록 날짜로 본3 1학기·본3 2학기·본4 점수표를 나눕니다. 본3 진료 집계 마감(2학기 16주 토요일) 다음 날부터 본4로 셉니다.</div>
+      <div class="scroll"><table><thead><tr><th>적용 기준</th><th>대상</th><th>본3 2학기 시작</th><th>본4 시작</th><th>본4 진료 마감</th></tr></thead><tbody>${coh}</tbody></table></div>
+      <div class="row"><label class="small">전공의 통합 진료 나절당 인원 <input type="number" min="1" data-cfg="통합진료_나절당인원" value="${esc(c.intCap)}" style="width:56px"></label>
+        <label class="small">미니인턴십 주당 인원 <input type="number" min="1" data-cfg="미니인턴십_주당인원" value="${esc(c.miniPerWeek)}" style="width:56px"></label>
+        <label class="small">진정·전마 증례 하루 인원 <input type="number" min="1" data-cfg="진정전마_하루인원" value="${esc(c.caseCap)}" style="width:56px"></label>
+        <label class="small"><input type="checkbox" data-cfg="학생_비밀번호사용" ${c.usePw?"checked":""}> 학생도 비밀번호 사용</label></div></div>
+    <div class="section"><div class="row"><h2>학생 명단</h2><span class="pill">본3 ${cnt("본3")}명</span><span class="pill">본4 ${cnt("본4")}명</span></div>
+      <div class="small muted">2026-2학기 학생 명단입니다. 명단을 고치려면 시트의 '학생' 탭을 직접 고칩니다. 현 본3은 2026, 현 본4는 2025 오리엔테이션 기준으로 계산합니다.</div>
+      <div class="scroll"><table><thead><tr><th>학년</th><th class="num">번호</th><th>이름</th><th>학번</th><th>조</th><th>비밀번호</th></tr></thead><tbody>${S.roster.map(s=>`<tr><td>${s.year}</td><td class="num">${s.no}</td><td>${esc(s.name)}</td><td class="mono">${esc(s.id)}</td><td>${s.group||""}</td><td>${s.hasPw?`<span class="pill ok">설정됨</span> <button class="btn sm" data-act="resetStuPw" data-sid="${esc(s.id)}">초기화</button>`:""}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
+
+/* ───────── 대화상자 ───────── */
+function dialog(html, onMount){
+  const root = $("#dlgRoot");
+  root.innerHTML = `<div class="scrim" data-act="close-scrim"><div class="dlg" role="dialog" aria-modal="true">${html}</div></div>`;
+  const first = root.querySelector("input,select,button.pri"); if(first) first.focus();
+  if(onMount) onMount(root.querySelector(".dlg"));
+}
+function closeDlg(){ $("#dlgRoot").innerHTML = ""; }
+function counterRow(keys, vals){ return keys.map(([k,l]) => `<span class="small">${l} <span class="counter"><button type="button" data-cn="${k}" data-d="-1">−</button><b id="cn_${k}">${vals[k]||0}</b><button type="button" data-cn="${k}" data-d="1">＋</button></span></span>`).join(" "); }
+function bindCounters(dlg, vals){ dlg.addEventListener("click", e => { const b = e.target.closest("[data-cn]"); if(!b) return; const k=b.dataset.cn; vals[k]=Math.max(0,(vals[k]||0)+ +b.dataset.d); dlg.querySelector("#cn_"+k).textContent = vals[k]; }); }
+
+function openBook(kind, date, half, prof, label){
+  if(S.preview){ toast(PREVIEW_MSG); return; }
+  const staffView = isStaff();
+  if(staffView && !can.manage()){ toast("학생 대신 신청은 관리자(학생담당 전공의)만 할 수 있습니다."); return; }
+  const sid = staffView ? S.sel : myStudentId();
+  if(!sid){ toast("먼저 신청할 학생을 고르세요."); return; }
+  if(!staffView && date < today()){ toast("지난 날짜는 신청할 수 없습니다."); return; }
+  const s = stu(sid);
+  const cap = kind==="int" ? +S.cfg.intCap : kind==="case" ? +S.cfg.caseCap : null;
+  const n = kind==="int" ? slotCount("int", date, half) : kind==="case" ? slotCount("case", date) : 0;
+  const dup = allItems().some(i => live(i) && i.sid===sid && i.date===date && (kind==="case" ? i.kind==="case" : i.half===half) && i.kind!=="mini");
+  const wk = S.weeks[mondayOf(date)]; const day = wk && wk.days.find(d=>d.date===date);
+  const slotOthers = (kind==="prof"||kind==="disab"||kind==="mini") ? slotItems(date, half, prof).filter(x => x.sid!==sid) : [];
+  const miniOk = !slotOthers.length;
+  const kinds = kind==="mini" ? [["mini","미니인턴십 세션"]] : kind==="disab" ? [["disab","장애인 치과치료 Attending (권장구)"],["prof","교수 Attending"]].concat(miniOk?[["mini","미니인턴십 세션"]]:[]) : kind==="prof" ? [["prof","교수 Attending"]].concat(miniOk?[["mini","미니인턴십 세션"]]:[]) : [[kind, kindLabel(kind, s)]];
+  const mm = myMini(sid); const N = S.cfg.miniN || 6;
+  dialog(`<h2>${esc(kindLabel(kind,s))} 신청</h2>
+    <div class="kv"><span class="muted">학생</span><span>${esc(stuLabel(s))}</span><span class="muted">날짜</span><span class="mono">${md(date)}(${dow(date)}) ${half?HALF[half]:""}</span>${prof?`<span class="muted">교수</span><span>Pf.${esc(prof)} · ${esc(label||"")}</span>`:""}
+     ${kind==="case" && day ? `<span class="muted">예정</span><span class="small">${esc([day.ga&&"전신마취: "+day.ga, day.sed&&"진정: "+day.sed].filter(Boolean).join("\n")).replace(/\n/g,"<br>")}</span>`:""}</div>
+    ${kinds.length>1?`<div class="f"><label for="bkKind">종류</label><select id="bkKind">${kinds.map(([v,l])=>`<option value="${v}">${l}</option>`).join("")}</select></div>`:""}
+    ${kind==="case"?`<div class="f"><label for="bkHalf">나절</label><select id="bkHalf"><option value="am">오전</option><option value="pm">오후</option></select></div>`:""}
+    ${cap!=null?`<div class="small ${n>=cap?"":"muted"}">현재 ${n}/${cap}명 신청${n>=cap?" — 자리가 찼습니다":""}</div>`:""}
+    ${dup?`<div class="note">이미 같은 나절에 신청이 있습니다.</div>`:""}
+    ${kinds.some(k=>k[0]==="mini")?`<div class="small muted" id="bkMiniNote">미니인턴십으로 고르면 이 나절은 이 학생 자리로 잡혀 다른 학생이 들어올 수 없습니다. 지금 ${mm.length}/${N}세션${mm[0]?`, ${md(mm[0].date)}~${md(addDays(mm[0].date,(S.cfg.miniDays||14)-1))} 안에서 골라야 합니다`:""}.</div>`:""}
+    ${(kind==="prof"||kind==="disab") && !miniOk?`<div class="small muted">이 나절에는 다른 학생이 이미 신청해 있어 미니인턴십으로는 잡을 수 없습니다.</div>`:""}
+    <div class="row"><span class="spacer"></span><button class="btn" data-act="close">닫기</button><button class="btn pri" id="bkGo" ${(cap!=null&&n>=cap)||dup?"disabled":""}>신청</button></div>`, dlg => {
+    dlg.querySelector("#bkGo").onclick = () => act(async () => {
+      const k = dlg.querySelector("#bkKind")?.value || kind;
+      const h = kind==="case" ? dlg.querySelector("#bkHalf").value : half;
+      await api("book", {kind:k, date, half:h, prof:prof||"", sid}); closeDlg(); await reload();
+    }, "신청했습니다.");
+  });
+}
+function openConfirm(id){
+  const it = allItems().find(x => x.id===id); if(!it) return;
+  const s = stu(it.sid);
+  const vals = {OE:0,RD:0,F:0,TBI:0,ETC:0};
+  const keys = it.kind==="case" ? [] : it.kind==="mini" ? [...PROC, ["ETC","기타"]] : PROC;
+  dialog(`<h2>시행 확인</h2><div class="kv"><span class="muted">학생</span><span>${esc(stuLabel(s))}</span><span class="muted">신청</span><span>${md(it.date)+"("+dow(it.date)+")"} ${it.half?HALF[it.half]:""} · ${esc(kindLabel(it.kind,s))}${it.prof?" · Pf."+esc(it.prof):""}</span><span class="muted">학기</span><span>${s?phaseOf(s, it.date):""} 점수표</span></div>
+    ${keys.length?`<div><div class="small muted" style="margin-bottom:4px">직접 시행한 술기</div><div class="row">${counterRow(keys, vals)}</div></div>`:""}
+    ${it.kind==="mini"?`<div class="small muted">미니인턴십 한 세션입니다. 리포트·Oral test와 역량평가는 마지막에 점수표 탭에서 입력합니다.</div>`:""}
+    ${(it.kind==="case"||it.kind==="disab")?`<div class="row"><label class="small"><input type="checkbox" id="cfRep"> 리포트 확인</label><label class="small"><input type="checkbox" id="cfOral"> Oral test 확인</label></div>`:""}
+    <div class="f"><label for="cfChart">병록번호</label><input id="cfChart" placeholder="여러 개면 쉼표로"></div>
+    <div class="f"><label for="cfNote">메모</label><input id="cfNote"></div>
+    <div class="row"><span class="spacer"></span><button class="btn" data-act="close">닫기</button><button class="btn pri" id="cfGo">확인 저장</button></div>`, dlg => {
+    bindCounters(dlg, vals);
+    dlg.querySelector("#cfGo").onclick = () => act(async () => {
+      const p = {}; keys.forEach(([k]) => { if(vals[k]) p[k] = vals[k]; });
+      await api("confirm", {id, procs:p, sessions: +(dlg.querySelector("#cfSess")?.value||0), rep: !!dlg.querySelector("#cfRep")?.checked, oral: !!dlg.querySelector("#cfOral")?.checked,
+        chart: dlg.querySelector("#cfChart").value.trim(), note: dlg.querySelector("#cfNote").value.trim()});
+      closeDlg(); await reload();
+    }, "시행을 확인하고 점수표에 넣었습니다.");
+  });
+}
+function openAddRec(sid){
+  const s = stu(sid); if(!s) return;
+  const vals = {OE:0,RD:0,F:0,TBI:0,ETC:0};
+  dialog(`<h2>기록 추가 — ${esc(stuLabel(s))}</h2>
+    <div class="f"><label for="arKind">종류</label><select id="arKind"><option value="att:prof">교수 Attending</option><option value="att:int">${esc(kindLabel("int",s))}</option><option value="att:mini">미니인턴십 세션</option><option value="att:disab">장애인 치과치료 Attending</option><option value="case">진정·전신마취 증례</option><option value="prac">Practice</option><option value="fv">1st visit(초진)</option><option value="assist">원내생진료실 Assist</option></select></div>
+    <div class="f"><label for="arDate">날짜</label><input type="date" id="arDate" value="${today()}"></div>
+    <div class="f"><label for="arHalf">나절</label><select id="arHalf"><option value="am">오전</option><option value="pm">오후</option><option value="">-</option></select></div>
+    <div class="f"><label for="arProf">교수</label><select id="arProf"><option value="">-</option>${S.profs.map(p=>`<option>${esc(p)}</option>`).join("")}</select></div>
+    <div class="f"><label for="arItem">Practice 술식</label><select id="arItem">${PRAC_ITEMS.map(([v,l])=>`<option value="${v}">${l}</option>`).join("")}</select></div>
+    <div class="f"><label for="arGrade">질적평가</label><select id="arGrade"><option value="">-</option><option value="E">E (+2)</option><option value="A">A (+1)</option><option value="N">N (0)</option><option value="F">F (불인정)</option></select></div>
+    <div class="row"><label class="small"><input type="checkbox" id="afOE"> 구강검진</label><label class="small"><input type="checkbox" id="afXR"> 방사선</label><label class="small"><input type="checkbox" id="afOHI"> 구강위생교육</label><label class="small"><input type="checkbox" id="afF"> 불소</label><span class="small muted">(초진)</span></div>
+    <div><div class="small muted" style="margin-bottom:4px">술기 횟수(Attending)</div><div class="row">${counterRow([...PROC,["ETC","기타"]], vals)}</div></div>
+    <div class="row"><label class="small">세션 <input type="number" id="arSess" min="1" value="1" style="width:56px"></label><label class="small"><input type="checkbox" id="arRep"> 리포트</label><label class="small"><input type="checkbox" id="arOral"> Oral test</label></div>
+    <div class="f"><label for="arSheet">점수표</label><select id="arSheet"><option value="">날짜로 자동</option><option value="3-1">본3 1학기</option><option value="3-2">본3 2학기</option><option value="4">본4</option></select></div>
+    <div class="f"><label for="arChart">병록번호</label><input id="arChart"></div>
+    <div class="f"><label for="arNote">메모</label><input id="arNote"></div>
+    <div class="row"><span class="spacer"></span><button class="btn" data-act="close">닫기</button><button class="btn pri" id="arGo">추가</button></div>`, dlg => {
+    bindCounters(dlg, vals);
+    dlg.querySelector("#arGo").onclick = () => act(async () => {
+      const [kind, type] = dlg.querySelector("#arKind").value.split(":");
+      const g = id => dlg.querySelector(id);
+      const rec = {sid, kind, date:g("#arDate").value, half:g("#arHalf").value, prof:g("#arProf").value, chart:g("#arChart").value.trim(), note:g("#arNote").value.trim(), sheet:g("#arSheet").value};
+      if(kind==="att"){ rec.type=type; const p={}; Object.entries(vals).forEach(([k,v])=>{ if(v) p[k]=v; }); rec.procs=p; if(type==="mini") rec.sessions=+g("#arSess").value||1; if(type==="disab"){ rec.rep=g("#arRep").checked; rec.oral=g("#arOral").checked; } }
+      if(kind==="case"){ rec.rep=g("#arRep").checked; rec.oral=g("#arOral").checked; }
+      if(kind==="prac"){ rec.item=g("#arItem").value; rec.grade=g("#arGrade").value; }
+      if(kind==="fv"){ rec.fv={OE:g("#afOE").checked, XR:g("#afXR").checked, OHI:g("#afOHI").checked, F:g("#afF").checked}; rec.grade=g("#arGrade").value; }
+      if(!rec.date) throw {message:"날짜를 넣어 주세요."};
+      await api("add_record", {rec}); closeDlg(); await loadStudent(sid); render();
+    }, "기록을 추가했습니다.");
+  });
+}
+function openInboxOk(id){
+  const it = S.inbox.find(x => x.id===id); if(!it) return;
+  if(it.type==="scan"){ act(async () => { await api("inbox_ok", {id}); await reload(); }, "반영 완료로 표시했습니다."); return; }
+  const s = stu(it.sid);
+  dialog(`<h2>보고 확인</h2><div class="kv"><span class="muted">학생</span><span>${esc(stuLabel(s))}</span><span class="muted">내용</span><span>${esc(caseLabel(it))}</span><span class="muted">날짜</span><span>${it.date?md(it.date):""}</span><span class="muted">병록번호</span><span>${esc(it.chart||"")}</span><span class="muted">메모</span><span>${esc(it.note||"")}${it.resident?" · 전공의 "+esc(it.resident):""}</span></div>
+    ${it.kind!=="assist"?`<div class="f"><label for="ioGrade">질적평가</label><select id="ioGrade"><option value="A">A (+1)</option><option value="E">E (+2)</option><option value="N">N (0)</option><option value="F">F (불인정)</option></select></div>`:""}
+    ${it.kind==="prac"?`<div class="f"><label for="ioItem">술식</label><select id="ioItem">${PRAC_ITEMS.map(([v,l])=>`<option value="${v}" ${it.item===v?"selected":""}>${l}</option>`).join("")}</select></div>`:""}
+    <div class="row"><span class="spacer"></span><button class="btn" data-act="close">닫기</button><button class="btn pri" id="ioGo">반영</button></div>`, dlg => {
+    dlg.querySelector("#ioGo").onclick = () => act(async () => { await api("inbox_ok", {id, grade: dlg.querySelector("#ioGrade")?.value || "", item: dlg.querySelector("#ioItem")?.value || ""}); closeDlg(); await reload(); }, "점수표에 반영했습니다.");
+  });
+}
+function openPwChange(){
+  dialog(`<h2>비밀번호 변경</h2>
+    <div class="f"><label for="pcOld">지금 비밀번호</label><input id="pcOld" type="password" autocomplete="current-password"></div>
+    <div class="f"><label for="pcNew">새 비밀번호</label><input id="pcNew" type="password" autocomplete="new-password" placeholder="${isStaff()?"8":"4"}자 이상"></div>
+    <div class="f"><label for="pcNew2">새 비밀번호 확인</label><input id="pcNew2" type="password" autocomplete="new-password"></div>
+    <div class="row"><span class="spacer"></span><button class="btn" data-act="close">닫기</button><button class="btn pri" id="pcGo">바꾸기</button></div>`, dlg => {
+    dlg.querySelector("#pcGo").onclick = () => act(async () => {
+      const g = id => dlg.querySelector(id).value;
+      if(g("#pcNew") !== g("#pcNew2")) throw {message:"새 비밀번호 확인이 맞지 않습니다."};
+      await api("change_pw", {oldPw:g("#pcOld"), newPw:g("#pcNew")}); closeDlg();
+    }, "비밀번호를 바꿨습니다.");
+  });
+}
+function showCode(name, code){
+  dialog(`<h2>임시 비밀번호</h2><div class="small muted">${esc(name)} 님에게 아래 번호를 직접 알려 주세요. 이 창을 닫으면 다시 볼 수 없습니다. 처음 로그인할 때 새 비밀번호로 바꾸게 됩니다.</div>
+    <div class="mono" style="font-size:28px;letter-spacing:.2em;text-align:center;padding:10px 0">${esc(code)}</div>
+    <div class="row"><span class="spacer"></span><button class="btn pri" data-act="close">닫기</button></div>`);
+}
+
+/* ───────── 로그인 ───────── */
+async function doLogin(){
+  const pw = $("#lgPw")?.value || "";
+  await act(async () => {
+    let r;
+    if(S.loginMode==="student") r = await apiNoToken("login_student", {sid:($("#lgNum").value||"").trim(), name:($("#lgName").value||"").trim(), pw});
+    else r = await apiNoToken("login_staff", {name:($("#lgName").value||"").trim(), pw});
+    S.token = r.token; ss.set("pedo.token", r.token); S.mustChange = !!r.mustChange; S.setFirst = !!r.setFirst; S.tempPw = pw;
+    S.me = {kind: S.loginMode==="student" ? "student" : "staff"};
+    if(!S.mustChange) await reload(); else render();
+  });
+}
+async function apiNoToken(action, data){ S.token = null; return api(action, data); }
+function logoutLocal(){ S.token = null; S.me = null; S.preview = null; S.mustChange = false; ss.set("pedo.token", null); render(); }
+
+/* ───────── 이벤트 ───────── */
+document.addEventListener("click", async e => {
+  const t = e.target.closest("[data-tab]");
+  if(t){ S.tab = t.dataset.tab; ls.set("pedo.tab", S.tab); if(S.tab==="log" && !S.logs) loadLogs(); if(S.tab==="admin" && !S.staff) loadStaff(); render(); return; }
+  const a = e.target.closest("[data-act]"); if(!a) return;
+  const k = a.dataset.act;
+  if(k==="close-scrim"){ if(e.target === a) closeDlg(); return; }
+  if(k==="close"){ closeDlg(); return; }
+  if(k==="setApi"){ const u = ($("#apiUrl").value||"").trim(); if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(u)){ toast("…/exec 로 끝나는 앱스 스크립트 주소를 넣어 주세요."); return; } S.api = u; ls.set("pedo.api", u); render(); return; }
+  if(k==="loginMode"){ S.loginMode = S.loginMode==="student" ? "staff" : "student"; render(); return; }
+  if(k==="login"){ doLogin(); return; }
+  if(k==="mustChange"){ const n1 = $("#mcNew").value, n2 = $("#mcNew2").value; if(n1!==n2){ toast("비밀번호 확인이 맞지 않습니다."); return; }
+    act(async () => { await api("change_pw", {oldPw:S.tempPw||"", newPw:n1}); S.mustChange = false; S.tempPw = ""; await reload(); }, "비밀번호를 정했습니다."); return; }
+  if(k==="logout"){ act(async () => { try{ await api("logout"); }catch(err){} logoutLocal(); }); return; }
+  if(k==="pwChange"){ openPwChange(); return; }
+  if(k==="refresh"){ act(reload); return; }
+  if(k==="wk"){ const w = weeksAvail(); const i = w.indexOf(S.week) + +a.dataset.d; if(w[i]){ S.week = w[i]; render(); } return; }
+  if(k==="book"){ openBook(a.dataset.kind, a.dataset.date, a.dataset.half, a.dataset.prof, a.dataset.label); return; }
+  if(k==="case"){ openBook("case", a.dataset.date, "", "", ""); return; }
+
+  if(k==="cancel"){ if(S.preview){ toast(PREVIEW_MSG); return; } act(async () => { await api("cancel", {id:a.dataset.id}); await reload(); }, "취소했습니다."); return; }
+  if(k==="confirm"){ openConfirm(a.dataset.id); return; }
+  if(k==="noshow"){ act(async () => { await api("noshow", {id:a.dataset.id}); await reload(); }, "불참으로 기록했습니다."); return; }
+  if(k==="addRec"){ openAddRec(S.sel); return; }
+  if(k==="scanRec"){ S.sel = a.dataset.sid; if(!S.stu[S.sel]) await act(() => loadStudent(S.sel)); openAddRec(a.dataset.sid); return; }
+  if(k==="delRec"){ if(a.dataset.armed!=="1"){ a.dataset.armed="1"; a.textContent="정말 삭제"; setTimeout(()=>{ if(a.isConnected){ a.dataset.armed=""; a.textContent="삭제"; } }, 3000); return; }
+    act(async () => { await api("del_record", {id:a.dataset.id}); await loadStudent(S.sel); render(); }, "기록을 삭제했습니다."); return; }
+  if(k==="saveMarks"){ const sid = S.sel; const d = S.draftMarks[sid]; if(!d) return; act(async () => { await api("save_marks", {sid, marks:d}); delete S.draftMarks[sid]; await loadStudent(sid); render(); }, "저장했습니다."); return; }
+  if(k==="dropMarks"){ delete S.draftMarks[S.sel]; render(); return; }
+  if(k==="inboxOk"){ openInboxOk(a.dataset.id); return; }
+  if(k==="inboxNo"){ act(async () => { await api("inbox_no", {id:a.dataset.id}); await reload(); }, "반려했습니다."); return; }
+  if(k==="viewFile"){ act(async () => { const r = await api("get_file", {id:a.dataset.id}); const b = Uint8Array.from(atob(r.data), c => c.charCodeAt(0)); S.files[a.dataset.id] = {mime:r.mime, url:URL.createObjectURL(new Blob([b], {type:r.mime}))}; render(); }); return; }
+  if(k==="submitCase"){ if(S.preview){ toast(PREVIEW_MSG); return; } const kind = $("#sbKind").value;
+    const sub = {kind, date:$("#sbDate").value, chart:$("#sbChart").value.trim(), resident:$("#sbRes").value.trim(), note:$("#sbNote").value.trim()};
+    if(kind==="prac") sub.item = $("#sbItem").value;
+    if(kind==="fv") sub.fv = {OE:$("#fvOE").checked, XR:$("#fvXR").checked, OHI:$("#fvOHI").checked, F:$("#fvF").checked};
+    act(async () => { await api("submit", {sub}); await reload(); }, "보고했습니다. 확인되면 점수에 반영됩니다."); return; }
+  if(k==="preview"){ dialog(`<h2>학생 화면 보기</h2><div class="small muted">고른 학생이 들어왔을 때 보는 화면을 그대로 보여 줍니다.</div>${studentPicker("pvStu", S.preview || S.sel, "학생")}<div class="row"><span class="spacer"></span><button class="btn" data-act="close">닫기</button><button class="btn pri" id="pvGo">보기</button></div>`, dlg => {
+      dlg.querySelector("#pvGo").onclick = () => { const v = dlg.querySelector("#pvStu").value; if(!v){ toast("학생을 골라 주세요."); return; } closeDlg(); act(async () => { await loadStudent(v); S.preview = v; S.tab = "home"; render(); }); }; }); return; }
+  if(k==="pvEnd"){ S.preview = null; S.tab = "sched"; render(); return; }
+  if(k==="logSearch"){ S.logQ = $("#logQ").value; loadLogs(); return; }
+  if(k==="resetPw"){ const x = (S.staff||[]).find(y => y.id===a.dataset.id); act(async () => { const r = await api("reset_pw", {id:a.dataset.id}); await loadStaff(); showCode(x?x.name:"", r.code); }); return; }
+  if(k==="setActive"){ act(async () => { await api("set_active", {id:a.dataset.id, active: a.dataset.on==="1"}); await loadStaff(); }, "바꿨습니다."); return; }
+  if(k==="addStaff"){ const name = $("#nsName").value.trim(); if(!name){ toast("이름을 넣어 주세요."); return; } act(async () => { await api("add_staff", {name, kind:$("#nsKind").value, year:$("#nsYear").value}); await loadStaff(); }, "추가했습니다."); return; }
+  if(k==="saveCfg"){ const v = S.cfgVals || {}; act(async () => { await api("save_settings", {values:v}); S.cfgVals = null; S.cfgDraft = null; await reload(); }, "저장했습니다."); return; }
+  if(k==="resetStuPw"){ act(async () => { await api("reset_student_pw", {sid:a.dataset.sid}); await reload(); }, "초기화했습니다. 다음 입장 때 새로 정합니다."); return; }
+});
+async function loadLogs(){ await act(async () => { S.logs = await api("logs", {month:S.logMonth || today().slice(0,7), q:S.logQ}); render(); }); }
+async function loadStaff(){ const r = await api("staff_list"); S.staff = r.staff; render(); }
+document.addEventListener("change", async e => {
+  const t = e.target;
+  if(t.id==="wkSel"){ S.week = t.value; render(); return; }
+  if(t.id==="selStu" || t.id==="selStu2"){ S.sel = t.value || null; if(S.sel && !S.stu[S.sel]) await act(() => loadStudent(S.sel)); render(); return; }
+  if(t.id==="fFrom"){ S.filter.from = t.value; render(); return; }
+  if(t.id==="fTo"){ S.filter.to = t.value; render(); return; }
+  if(t.id==="fSt"){ S.filter.status = t.value; render(); return; }
+  if(t.id==="logM"){ S.logMonth = t.value; loadLogs(); return; }
+  if(t.dataset.role){ act(async () => { await api("set_role", {id:t.dataset.role, role:t.value}); await loadStaff(); }, "역할을 바꿨습니다."); return; }
+  if(t.id==="sbScan"){ if(S.preview){ toast(PREVIEW_MSG); t.value=""; return; } const f = t.files[0]; if(!f) return;
+    if(f.size > 7*1024*1024){ toast("7MB 이하 파일만 올릴 수 있습니다."); t.value=""; return; }
+    const data = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = rej; r.readAsDataURL(f); });
+    act(async () => { await api("submit_scan", {mime:f.type, data, note:$("#sbScanNote").value.trim()}); t.value=""; await reload(); }, "올렸습니다. 확인되면 점수에 반영됩니다."); return; }
+  if(t.dataset.mk){ markInput(t); return; }
+  if(t.dataset.cfg){ S.cfgVals = S.cfgVals || {}; S.cfgVals[t.dataset.cfg] = t.type==="checkbox" ? (t.checked ? "Y" : "N") : t.value; return; }
+});
+document.addEventListener("keydown", e => {
+  if(e.key!=="Enter") return;
+  if(["lgNum","lgName","lgPw"].includes(e.target.id)) doLogin();
+  if(e.target.id==="mcNew2") document.querySelector('[data-act="mustChange"]')?.click();
+  if(e.target.id==="logQ"){ S.logQ = e.target.value; loadLogs(); }
+  if(e.target.id==="apiUrl") document.querySelector('[data-act="setApi"]')?.click();
+});
+document.addEventListener("keydown", e => { if(e.key==="Escape" && $("#dlgRoot").innerHTML) closeDlg(); });
+function setPath(obj, path, v){ const ks = path.split("."); let o = obj; ks.slice(0,-1).forEach(k => { if(typeof o[k]!=="object" || o[k]===null) o[k] = {}; o = o[k]; }); o[ks[ks.length-1]] = v; }
+function markInput(t){
+  const sid = S.sel; if(!sid || !S.stu[sid]) return;
+  const d = S.draftMarks[sid] || JSON.parse(JSON.stringify(S.stu[sid].marks || {}));
+  const v = t.type==="checkbox" ? t.checked : t.type==="number" ? (t.value===""?"":+t.value) : t.value;
+  setPath(d, t.dataset.mk, v); S.draftMarks[sid] = d; render();
+}
+document.addEventListener("visibilitychange", () => { if(document.visibilityState==="visible" && S.me && !S.mustChange && !S.busy) reload().catch(()=>{}); });
+setInterval(() => { if(document.visibilityState==="visible" && S.me && !S.mustChange && !S.busy && !$("#dlgRoot").innerHTML) reload().catch(()=>{}); }, 120000);
+
+/* ───────── 시작 ───────── */
+(async function boot(){
+  const q = new URLSearchParams(location.search);
+  S.api = q.get("api") || API_URL_DEFAULT || ls.get("pedo.api") || "";
+  if(q.get("api")) ls.set("pedo.api", S.api);
+  S.loginMode = q.get("staff")!==null || location.hash==="#staff" ? "staff" : "student";
+  S.filter.from = addDays(today(), -21); S.filter.to = addDays(today(), 7);
+  S.logMonth = today().slice(0,7);
+  S.tab = ls.get("pedo.tab") || null;
+  const tok = ss.get("pedo.token");
+  if(S.api && tok){ S.token = tok; S.me = {kind:"?"}; try{ await reload(); }catch(e){ logoutLocal(); } }
+  render();
+})();
+
+})();
+</script>
+</body>
+</html>
